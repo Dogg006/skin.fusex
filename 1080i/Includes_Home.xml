@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="Topbar">
+        <control type="button">
+            <visible allowhiddenfocus="true">false</visible>
+            <top>0</top>
+            <height>400</height>
+            <onfocus>SetProperty(ShowInfobar,0,Home)</onfocus>
+        </control>
+        <control type="group">
+			<visible>Window.IsVisible(Home)</visible>
+            <include>Topbar_SubMenu</include>
+            <include>Topbar_MainMenu</include>
+        </control>
+    </include>
+
+    <include name="Topbar_OnClick">
+        <!-- Set ReturnWindow -->
+    </include>
+
+    <include name="Topbar_OnFocus">
+        <onfocus>ClearProperty(HideBottomBar,Home)</onfocus>
+        <onfocus>SetProperty(ShowTopbar,1,Home)</onfocus>
+        
+        <onfocus>ClearProperty(ContextModifier,Home)</onfocus>
+        <onfocus>ClearProperty(ContextPosition,Home)</onfocus>
+        <onfocus condition="$EXP[Expression_ReplaceWindowHome]">ReplaceWindow(Home)</onfocus>
+    </include>
+
+    <!-- ======== -->
+    <!-- MainMenu -->
+    <!-- ======== -->
+    <include name="Topbar_MainMenu">
+        <control type="group">
+            <include>Topbar_MainMenu_Group</include>
+            <include>Topbar_MainMenu_Home</include>
+            <include>Topbar_MainMenu_Lines</include>
+        </control>
+    </include>
+
+    <include name="Topbar_MainMenu_Group">
+        <top>0</top>
+        <left>0</left>
+        <right>0</right>
+        <height>1080</height>
+		<width>70</width>
+
+        <control type="image">
+            <texture>common/gradient-solid.png</texture>
+            <include>Defs_DarkShadow</include>
+        </control>
+
+        <control type="image">
+			<visible>Control.HasFocus(300)</visible>
+            <width>10</width>
+            <right>-10</right>
+            <texture colordiffuse="Background">common/white.png</texture>
+        </control>
+        <control type="image">
+			<visible>Control.HasFocus(300)</visible>
+            <width>3</width>
+            <right>-10</right>
+            <texture colordiffuse="highlight_bottombar">common/white.png</texture>
+        </control>
+
+		
+          <control type="label">
+                <left>100</left>
+                <top>-1000</top>
+                <width>500</width>
+                <label>$INFO[Container(300).ListItem(0).Label]</label>
+                <font>font_infobar_mainlabel_Widget_2</font>
+                <textcolor>main_fg_100</textcolor>
+				<visible>Control.HasFocus(300)</visible>
+            </control>
+		
+		
+
+        <animation effect="slide" start="0,0" end="290,0" time="300"  reversible="true" condition="Control.HasFocus(302)">Conditional</animation>
+        <animation effect="fade" start="100" end="0" time="100" condition="
+		Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) 
+		| Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) 
+		| Window.IsVisible(DialogVideoInfo.xml)
+		">Conditional</animation>
+
+    </include>
+
+    <include name="Topbar_MainMenu_Lines">
+        <control type="image">
+            <top>0</top>
+            <height>1</height>
+            <texture colordiffuse="highlight_bottombar">common/white.png</texture>
+        </control>
+        <control type="image">
+            <bottom>0</bottom>
+            <height>1</height>
+            <texture colordiffuse="darkline_topbar">common/white.png</texture>
+            <animation effect="fade" start="100" end="25" condition="Skin.HasSetting(EnableTransparency)">Conditional</animation>
+        </control>
+    </include>
+
+    <include name="Topbar_MainMenu_Home">
+        <control type="list" id="300">
+            <onfocus>SetProperty(MenuBarFocus,300,Home)</onfocus>
+			<onleft>SetProperty(ShowSubBar,1,Home)</onleft>
+			<onleft>302</onleft>	
+			<onright>301</onright>
+            <include>Topbar_OnClick</include>
+            <include>Topbar_OnFocus</include>
+<!--             <include>Topbar_MainMenu_Movement</include> -->
+            <include>Topbar_MainMenu_Layout</include>
+            <include condition="![Window.IsVisible(settings) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)]">Topbar_MainMenu_HomeItems</include>
+            <include condition="[Window.IsVisible(settings) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)]">Topbar_MainMenu_SettingsItems</include>
+        </control>
+    </include>
+
+    <include name="Topbar_MainMenu_Layout">
+        <height>1050</height>
+		<top>10</top>
+        <left>0</left>
+        <right>0</right>
+		<width>150</width>
+        <orientation>vertical</orientation>
+		
+		<onleft>302</onleft>
+        <itemlayout height="70" width="100">
+                <control type="image">
+                    <left>5</left>
+                    <right>5</right>
+                    <height>60</height>
+                    <width>60</width>
+ 					<top>5</top>                                     
+                    <aligny>center</aligny>
+                    <align>center</align>
+
+                    <texture colordiffuse="main_fg_70">$INFO[ListItem.Icon]</texture>
+
+                </control>
+        </itemlayout>
+        <focusedlayout height="70" width="100">
+
+            <control type="group">
+                
+
+                <control type="image">
+                    <left>5</left>
+                    <right>5</right>
+                    <height>60</height>
+                    <width>60</width>
+ 					<top>5</top>                                     
+                    <aligny>center</aligny>
+                    <align>center</align>
+	
+                    <texture>$INFO[ListItem.Icon]</texture>
+
+                </control>
+            </control>
+            <control type="group">
+                <visible>Control.HasFocus(300)</visible>
+				<left>70</left>
+				<width>5</width>
+                <control type="group">
+                            <control type="image">
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+	
+                </control>
+				
+
+            </control>
+        </focusedlayout>
+    </include>
+
+    <include name="Topbar_MainMenu_Movement">
+        <ondown condition="!Integer.IsEqual(Container(302).NumItems,0) + Container(300).Position(0)">SetFocus(302,0)</ondown>
+        <ondown condition="!Integer.IsEqual(Container(302).NumItems,0) + Container(300).Position(1)">SetFocus(302,1)</ondown>
+        <ondown condition="!Integer.IsEqual(Container(302).NumItems,0) + Container(300).Position(2)">SetFocus(302,2)</ondown>
+        <ondown condition="!Integer.IsEqual(Container(302).NumItems,0) + Container(300).Position(3)">SetFocus(302,3)</ondown>
+        <ondown condition="!Integer.IsEqual(Container(302).NumItems,0) + Container(300).Position(4)">SetFocus(302,4)</ondown>
+        <ondown condition="!Integer.IsEqual(Container(302).NumItems,0) + Container(300).Position(5)">SetFocus(302,5)</ondown>
+
+        <ondown condition="Integer.IsEqual(Container(302).NumItems,0) + Window.IsVisible(home) + !Container(301).IsUpdating + Control.IsVisible(301)">301</ondown>
+        <ondown condition="Integer.IsEqual(Container(302).NumItems,0) + Window.IsVisible(home) + [Container(301).IsUpdating | !Control.IsVisible(301)]">9400</ondown>
+        <ondown condition="Integer.IsEqual(Container(302).NumItems,0) + Window.IsVisible(SettingsCategory.xml)">3</ondown>
+        <ondown condition="Integer.IsEqual(Container(302).NumItems,0) + Window.IsVisible(FileManager.xml)">20</ondown>
+        <ondown condition="Integer.IsEqual(Container(302).NumItems,0) + Window.IsVisible(SkinSettings.xml)">9100</ondown>
+        <ondown condition="Integer.IsEqual(Container(302).NumItems,0) + Window.IsVisible(script-script.extendedinfo-VideoList.xml)">500</ondown>
+        <ondown condition="Integer.IsEqual(Container(302).NumItems,0) + !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(script-script.extendedinfo-VideoList.xml)">50</ondown>
+
+        <onup condition="Window.IsVisible(home) + !Container(301).IsUpdating + Control.IsVisible(301)">301</onup>
+        <onup condition="!Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(script-script.extendedinfo-VideoList.xml)">50</onup>
+    </include>
+
+    <include name="Topbar_MainMenu_HomeItems">
+        <content><include>skinshortcuts-mainmenu</include></content>
+    </include>
+
+    <include name="Topbar_MainMenu_SettingsItems">
+        <content>
+            <item id="1">
+                <label>14206</label>
+                <icon>special://skin/extras/icons/swissarmy.png</icon>
+                <onclick>ReplaceWindow(InterfaceSettings)</onclick>
+                <property name="path">ReplaceWindow(InterfaceSettings)</property>
+                <property name="altpath">ActivateWindow(InterfaceSettings)</property>
+            </item>
+            <item id="2">
+                <label>14202</label>
+                <icon>special://skin/extras/icons/tags.png</icon>
+                <onclick>ReplaceWindow(MediaSettings)</onclick>
+                <property name="path">ReplaceWindow(MediaSettings)</property>
+                <property name="altpath">ActivateWindow(MediaSettings)</property>
+            </item>
+            <item id="3">
+                <label>14200</label>
+                <icon>special://skin/extras/icons/equalizer.png</icon>
+                <onclick>ReplaceWindow(PlayerSettings)</onclick>
+                <property name="path">ReplaceWindow(PlayerSettings)</property>
+                <property name="altpath">ActivateWindow(PlayerSettings)</property>
+            </item>
+            <item id="5">
+                <label>13000</label>
+                <icon>special://skin/extras/icons/configure.png</icon>
+                <onclick>ReplaceWindow(SystemSettings)</onclick>
+                <property name="path">ReplaceWindow(SystemSettings)</property>
+                <property name="altpath">ActivateWindow(SystemSettings)</property>
+            </item>
+            <item id="6">
+                <label>14036</label>
+                <icon>special://skin/extras/icons/network.png</icon>
+                <onclick>ReplaceWindow(servicesettings)</onclick>
+                <property name="path">ReplaceWindow(servicesettings)</property>
+                <property name="altpath">ActivateWindow(servicesettings)</property>
+            </item>
+            <item id="4">
+                <label>20077</label>
+                <icon>special://skin/extras/icons/year.png</icon>
+                <onclick>ReplaceWindow(SkinSettings)</onclick>
+                <property name="path">ReplaceWindow(SkinSettings)</property>
+                <property name="altpath">ActivateWindow(SkinSettings)</property>
+            </item>
+        </content>
+    </include>
+
+    <!-- ======= -->
+    <!-- SubMenu -->
+    <!-- ======= -->
+    <include name="Topbar_SubMenu">
+        <control type="group">
+			<left>-290</left>
+            <include>Topbar_SubMenu_Group</include>
+            <include>Topbar_SubMenu_Home</include>
+        </control>
+    </include>
+
+    <include name="Topbar_SubMenu_Group">
+		<onright>300</onright>
+
+        <animation effect="slide" start="0,0" end="-70,0" time="300" reversible="true" condition="Control.HasFocus(301)">Conditional</animation>
+        <animation effect="slide" start="0,0" end="290,0" time="300" reversible="true" condition="Control.HasFocus(302)">Conditional</animation>
+        <include>Topbar_SubMenu_Group_Content</include>
+    </include>
+
+	
+	    <include name="Home_Separator">
+        <param name="visible" default="true" />
+        <definition>
+            <control type="group">
+                <height>74</height>
+                <control type="group">
+                    <visible>$PARAM[visible]</visible>
+                    <include>Animation_FadeOut_Delay</include>
+                    <control type="image">
+                        <width>100%</width>
+                        <height>1</height>
+                        <top>0</top>
+                        <texture colordiffuse="darkline_separator">common/white.png</texture>
+                    </control>
+                    <control type="image">
+                        <width>100%</width>
+                        <height>1</height>
+                        <top>1</top>
+                        <texture colordiffuse="highlight_bottombar">common/white.png</texture>
+                    </control>
+                </control>
+            </control>
+        </definition>
+    </include>
+	
+
+    <include name="Topbar_SubMenu_Group_Content">
+        <top>0</top>
+        
+        <right>0</right>
+		<width>350</width>
+        <height>4080</height>
+
+        <control type="image">
+			<animation effect="fade" start="100" end="50" condition="true">Conditional</animation>
+
+             <texture colordiffuse="Background">common/white.png</texture>
+            <include>Defs_DarkShadow</include>
+        </control>
+
+
+		
+    </include>
+
+    <include name="Topbar_SubMenu_Home">
+        <control type="panel" id="302">
+            <visible allowhiddenfocus="true">$EXP[Expression_ShowSubBar]</visible>
+            <animation effect="fade" start="0" end="100" time="300">VisibleChange</animation>
+            <onright>SetProperty(ShowSubBar,0,Home)</onright>
+            <onright>300</onright>
+            <onleft>SetProperty(ShowSubBar,0,Home)</onleft>
+			<onleft>9400</onleft>	
+			<ondown>302</ondown>
+			<onup>302</onup>
+            <include>Topbar_OnClick</include>
+            <include>Topbar_OnFocus</include>
+            <include>Topbar_SubMenu_Movement</include>
+            <include>Topbar_SubMenu_Layout</include>
+            <include condition="![Window.IsVisible(settings) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)]">Topbar_SubMenu_HomeItems</include>
+            <include condition="[Window.IsVisible(settings) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)]">Topbar_SubMenu_SettingsItems</include>
+        </control>
+    </include>
+
+    <include name="Topbar_SubMenu_Layout">
+        <height>1080</height>
+        <left>0</left>
+		<top>30</top>
+        <right>0</right>
+        <orientation>horizontal</orientation>
+        <itemlayout height="60" width="290">
+            <control type="label">
+                <left>20</left>
+                <right>10</right>
+                <height>60</height>
+                <label>$INFO[ListItem.Label]</label>
+                <aligny>center</aligny>
+                <align>center</align>
+                <font>font_plotbox</font>
+                <textcolor>panel_fg_70</textcolor>
+            </control>
+        </itemlayout>
+        <focusedlayout height="60" width="290">
+                            <control type="image">
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>		
+            <control type="label">
+                <left>20</left>
+                <right>10</right>
+                <height>60</height>
+                <label>$INFO[ListItem.Label]</label>
+                <aligny>center</aligny>
+                <align>center</align>
+                <font>font_plotbox</font>
+                <textcolor>Selected</textcolor>
+            </control>
+        </focusedlayout>
+    </include>
+
+    <include name="Topbar_SubMenu_Movement">
+        <onup condition="[Window.IsVisible(Settings.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)] + Container(302).Position(0)">SetFocus(300,0)</onup>
+        <onup condition="[Window.IsVisible(Settings.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)] + Container(302).Position(1)">SetFocus(300,1)</onup>
+        <onup condition="[Window.IsVisible(Settings.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)] + Container(302).Position(2)">SetFocus(300,2)</onup>
+        <onup condition="[Window.IsVisible(Settings.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)] + Container(302).Position(3)">SetFocus(300,3)</onup>
+        <onup condition="[Window.IsVisible(Settings.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)] + Container(302).Position(4)">SetFocus(300,4)</onup>
+        <onup condition="[Window.IsVisible(Settings.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)] + Container(302).Position(5)">SetFocus(300,5)</onup>
+        <onup condition="![Window.IsVisible(Settings.xml) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)]">300</onup>
+
+        <ondown condition="Window.IsVisible(home) + !Container(301).IsUpdating + Control.IsVisible(301)">301</ondown>
+        <ondown condition="Window.IsVisible(home) + [Container(301).IsUpdating | !Control.IsVisible(301)]">9400</ondown>
+        <ondown condition="Window.IsVisible(SettingsCategory.xml)">3</ondown>
+        <ondown condition="Window.IsVisible(FileManager.xml)">20</ondown>
+        <ondown condition="Window.IsVisible(SkinSettings.xml)">9100</ondown>
+        <ondown condition="Window.IsVisible(script-script.extendedinfo-VideoList.xml)">500</ondown>
+        <ondown condition="!Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(script-script.extendedinfo-VideoList.xml)">50</ondown>
+    </include>
+
+    <include name="Topbar_SubMenu_HomeItems">
+        <content><include>skinshortcuts-submenu</include></content>
+    </include>
+
+    <include name="Topbar_SubMenu_SettingsItems">
+        <content>
+            <item id="7">
+                <label>13200</label>
+                <icon>special://skin/extras/icons/actor.png</icon>
+                <onclick>ReplaceWindow(Profiles)</onclick>
+                <property name="path">ReplaceWindow(Profiles)</property>
+                <property name="altpath">ActivateWindow(Profiles)</property>
+            </item>
+            <item id="8">
+                <label>24001</label>
+                <icon>special://skin/extras/icons/addons.png</icon>
+                <onclick>ReplaceWindow(AddonBrowser)</onclick>
+                <property name="path">ReplaceWindow(AddonBrowser)</property>
+                <property name="altpath">ActivateWindow(AddonBrowser)</property>
+            </item>
+            <item id="9">
+                <label>130</label>
+                <icon>special://skin/extras/icons/sysinfo.png</icon>
+                <onclick>ReplaceWindow(7)</onclick>
+                <property name="path">ReplaceWindow(7)</property>
+                <property name="altpath">ActivateWindow(7)</property>
+            </item>
+            <item id="10">
+                <label>19191</label>
+                <icon>special://skin/extras/icons/livetv.png</icon>
+                <onclick>ReplaceWindow(pvrsettings)</onclick>
+                <property name="path">ReplaceWindow(pvrsettings)</property>
+                <property name="altpath">ActivateWindow(pvrsettings)</property>
+            </item>
+            <item id="11">
+                <label>7</label>
+                <icon />
+                <onclick>ReplaceWindow(filemanager)</onclick>
+                <property name="path">ReplaceWindow(filemanager)</property>
+                <property name="altpath">ActivateWindow(filemanager)</property>
+            </item>
+            <item id="12">
+                <label>14114</label>
+                <icon />
+                <onclick>ReplaceWindow(eventlog)</onclick>
+                <property name="path">ReplaceWindow(eventlog)</property>
+                <property name="altpath">ActivateWindow(eventlog)</property>
+            </item>
+        </content>
+    </include>
+</includes>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foundation -->
+<window id="2003">
+    <defaultcontrol always="true">8</defaultcontrol>
+    
+    <onload>ClearProperty(FocusedList,Home)</onload>
+    <onunload>ClearProperty(FocusedList,Home)</onunload>
+    <onload>ClearProperty(ListFanartContent,Home)</onload>
+    <onunload>ClearProperty(ListFanartContent,Home)</onunload>
+    <onload>AlarmClock(RotateDisc,SetProperty(RotateDisc,1,Home),00:01,silent)</onload>
+    <onunload>ClearProperty(RotateDisc,Home)</onunload>
+    <controls>
+        <control type="image">
+            <bottom>0</bottom>
+            <top>0</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+        </control>
+		
+		
+        <control type="group">
+			
+            <bottom>-340</bottom>
+            <left>0</left>
+            <right>0</right>
+            		
+            <height>1020</height>
+           
+           
+            <control type="group">
+                <height>100</height>
+                <top>-20</top>
+				<right>20</right>
+                
+                <control type="group">
+					
+					<top>-370</top>
+                    <visible>!Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>
+                <control type="group">
+					<top>-350</top>
+
+                    <visible>Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>
+
+
+
+
+				</control>
+
+        </control>
+		
+		
+		
+        <control type="group">
+            <visible>!Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) + !Window.IsVisible(script-script.extendedinfo-DialogInfo.xml)</visible>
+<!--             <include content="Object_BigPoster">
+                <param name="variable" value="$VAR[Image_Poster_Info]"/>
+                <param name="discart" value="true" />
+            </include> -->
+            <control type="group">
+                <bottom>0</bottom>
+                <height>520</height>
+                <control type="group">
+                    <left>614</left>
+                    <right>30</right>
+                    <height>100</height>
+                    <top>0</top>
+                    <animation effect="fade" start="0" end="100" time="200" delay="400" reversible="false">Visible</animation>
+                    <!-- <visible>!String.IsEmpty(Window(Home).Property(FocusedList))</visible> -->
+                    <control type="label">
+                        <left>0</left>
+                        <right>0</right>
+                        <scroll>true</scroll>
+                        <scrollsuffix>. </scrollsuffix>
+                        <font>font_infobar_mainlabel</font>
+                        <textcolor>panel_fg_100</textcolor>
+                        <label>$VAR[Label_VideoInfo_Title]</label>
+                        <aligny>center</aligny>
+                        <top>0</top>
+                        <bottom>33%</bottom>
+                    </control>
+					
+
+				
+                    <control type="label">
+                        <left>0</left>
+                        <right>0</right>
+                        <font>font_infobar_sublabel</font>
+                        <textcolor>panel_fg_100</textcolor>
+                        <label>$VAR[Label_VideoInfo_InfoLine]</label>
+                        <aligny>center</aligny>
+                        <bottom>0</bottom>
+                        <top>33%</top>
+                    </control>
+                </control>
+            </control>
+            <control type="group">
+                <!-- <visible allowhiddenfocus="true">!Control.IsVisible(9501) + !Control.IsVisible(9502)</visible> -->
+                <include>Animation_FadeIn</include>
+                <include>Animation_FadeOut</include>
+                <!-- Information Left Side-->
+<!--                 <control type="image">
+                    <left>701</left>
+                    <texture background="true">$INFO[ListItem.Studio,resource://resource.images.studios.coloured/,.png]</texture>
+                    <width>400</width>
+                    <height>155</height>
+                    <top>20</top>
+                    <aspectratio>keep</aspectratio>
+                </control> -->
+                <control type="Label">
+                    <aligny>top</aligny>
+                    <textcolor>Selected</textcolor>
+                    <left>70</left>
+                    <width>1180</width>
+                    <font>font_weather_temp</font>
+                    <height>70</height>
+                    <top>20</top>
+                    
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+				
+				<control type="label">
+                    <aligny>top</aligny>
+                  
+                    <left>70</left>
+                    <width>1180</width>
+                    
+                    <height>70</height>
+                    <top>75</top>
+					<font>font_infobar_sublabel</font>
+					<textcolor>panel_fg_100</textcolor>
+					<label>$INFO[ListItem.Genre]</label>
+
+				</control>	
+                <control type="Label">
+                    <aligny>top</aligny>
+                    <textcolor>main_fg_70</textcolor>
+                    <left>70</left>
+                    <width>1180</width>
+                    <font>font_systeminfo_skinname</font>
+                    <height>70</height>
+                    <top>150</top>
+                    <textcolor>panel_fg_70</textcolor>
+                    <label>$INFO[ListItem.Tagline]</label>
+                </control>
+
+				
+				
+                <control type="grouplist">
+                    <top>192</top>
+                    <left>70</left>
+                    <width>1800</width>
+					<height>900</height>
+
+                    <!-- Plot -->
+                    <control type="group">
+                        <height min="32" max="500">auto</height>
+                        <visible>!String.IsEmpty(ListItem.Plot)</visible>
+                        <control type="label">
+                            <left>0</left>
+                            <width>160</width>
+                            <align>left</align>
+                            <textcolor>main_fg_70</textcolor>
+                            <font>font_systeminfo_skinversion</font>
+                            <label>31296</label>
+                            <aligny>top</aligny>
+                        </control>
+                        <control type="textbox">
+                            <top>32</top>
+                            <textcolor>main_fg_70</textcolor>
+                            <font>font_systeminfo_skinversion</font>
+                            <aligny>top</aligny>
+												<height>600</height>
+                            <label fallback="19055">$VAR[Label_Plot]</label>
+							<autoscroll delay="10000" time="4000" repeat="5000">true</autoscroll>
+                        </control>
+                    </control>
+                    <!-- Cast -->
+
+                </control>
+
+                <!-- Ratings -->
+<!--                 <control type="group">
+					<left>-700</left>
+                    <visible>!Container.Content(episodes)</visible>
+                    <visible>!Skin.HasSetting(UseColorFlags)</visible>
+                    <include content="Object_Ratings">
+                        <param name="directory" value="monochrome" />
+                    </include>
+                </control>
+                <control type="group">
+                    <visible>!Container.Content(episodes)</visible>
+                    <visible>Skin.HasSetting(UseColorFlags)</visible>
+                    <include content="Object_Ratings">
+                        <param name="directory" value="color" />
+                    </include>
+                </control> -->
+
+                <!-- Buttons -->
+                <control type="grouplist" id="9000">
+                    <left>50</left>
+                    <right>30</right>
+                    <align>left</align>
+                    <top>954</top>
+                    <height>60</height>
+                    <onup>RunScript(script.skin.helper.service,action=textviewer,header=$INFO[ListItem.Title],message='"$VAR[Label_Plot]"')</onup>
+                    <ondown>Close</ondown>
+                    <include>Dialog_Info_Button_Grouplist</include>
+
+                    <control type="button" id ="8">
+                        <description>Play</description>
+                        <label>208</label>
+                        <include>Dialog_Info_Buttons</include>
+                    </control>
+
+                    <control type="button" id="11">
+                        <description>Trailer button</description>
+                        <label>20410</label>
+                        <include>Dialog_Info_Buttons</include>
+                        <visible>!String.IsEmpty(ListItem.Trailer)</visible>
+                    </control>
+
+                    <control type="button" id="9003">
+                        <label>206</label>
+                        <onclick>SetProperty(FocusedList,9501,Home)</onclick>
+                        <onclick>SetFocus(9501)</onclick>
+                        <include>Dialog_Info_Buttons</include>
+                        <visible>!String.IsEmpty(ListItem.Cast)</visible>
+                        <enable>Integer.IsGreater(Container(9501).NumItems,0)</enable>
+                    </control>
+
+                    <control type="button" id="9002">
+                        <label>20339</label>
+                        <onclick>SetProperty(VideoInfo_InfoLine,$INFO[ListItem.Director],Home)</onclick>
+                        <onclick>SetProperty(FocusedList,9502,Home)</onclick>
+                        <onclick>SetFocus(9502)</onclick>
+                        <visible>Container.Content(movies)</visible>
+                        <visible>!String.IsEmpty(ListItem.Director)</visible>
+                        <include>Dialog_Info_Buttons</include>
+                        <enable>Integer.IsGreater(Container(9502).NumItems,0)</enable>
+                    </control>
+
+                    <control type="button" id="9005">
+                        <label>$LOCALIZE[29915]</label>
+                        <include>Dialog_Info_Buttons</include>
+                        <onclick condition="String.IsEqual(ListItem.DbType,movie)">RunScript(script.extendedinfo,info=extendedinfo,name=$INFO[ListItem.Title],imdb_id=$INFO[ListItem.IMDBNumber])</onclick>
+                        <onclick condition="String.IsEqual(ListItem.DbType,tvshow) | String.IsEqual(ListItem.DbType,episode)">RunScript(script.extendedinfo,info=extendedtvinfo,name=$INFO[ListItem.TvShowTitle])</onclick>
+                        <visible>System.hasAddon(script.extendedinfo) + [String.IsEqual(ListItem.DbType,movie) | String.IsEqual(ListItem.DbType,tvshow) | String.IsEqual(ListItem.DbType,episode)]</visible>
+                    </control>
+
+                    <control type="button" id ="10">
+                        <description>Artwork (Get Thumb)</description>
+                        <label>$LOCALIZE[13405]</label>
+                        <include>Dialog_Info_Buttons</include>
+                        <enable>!Skin.HasSetting(global.kioskmode)</enable>
+                    </control>
+
+                    <control type="button" id="9001">
+                        <label>$LOCALIZE[31203]</label>
+                        <onclick condition="Container.Content(tvshows) + !Skin.HasSetting(ArtworkDownloaderAll)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=tvshow, dbid=$INFO[ListItem.DBID])</onclick>
+                        <onclick condition="Container.Content(movies) + !Skin.HasSetting(ArtworkDownloaderAll)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=movie, dbid=$INFO[ListItem.DBID])</onclick>
+                        <onclick condition="Container.Content(musicvideos) + !Skin.HasSetting(ArtworkDownloaderAll)">XBMC.RunScript(script.artwork.downloader, mode=gui, mediatype=musicvideo, dbid=$INFO[ListItem.DBID])</onclick>
+                        <onclick condition="Container.Content(tvshows) + Skin.HasSetting(ArtworkDownloaderAll)">XBMC.RunScript(script.artwork.downloader, mediatype=tvshow, dbid=$INFO[ListItem.DBID])</onclick>
+                        <onclick condition="Container.Content(movies) + Skin.HasSetting(ArtworkDownloaderAll)">XBMC.RunScript(script.artwork.downloader, mediatype=movie, dbid=$INFO[ListItem.DBID])</onclick>
+                        <onclick condition="Container.Content(musicvideos) + Skin.HasSetting(ArtworkDownloaderAll)">XBMC.RunScript(script.artwork.downloader, mediatype=musicvideo, dbid=$INFO[ListItem.DBID])</onclick>
+                        <description>Get Artwork</description>
+                        <include>Dialog_Info_Buttons</include>
+                        <enable>!Skin.HasSetting(global.kioskmode)</enable>
+                        <visible>[Container.Content(tvshows) | Container.Content(movies) | Container.Content(musicvideos)] + system.hasaddon(script.artwork.downloader)</visible>
+                    </control>
+
+                    <control type="button" id ="6">
+                        <description>Refresh</description>
+                        <label>184</label>
+                        <include>Dialog_Info_Buttons</include>
+                        <enable>!Skin.HasSetting(global.kioskmode)</enable>
+                    </control>
+                </control>
+            </control>
+
+            <control type="group" id="9500">
+                <bottom>20</bottom>
+                <left>50</left>
+                <right>0</right>
+                <height>420</height>
+
+            </control>
+
+
+
+
+            <control type="scrollbar" id="60">
+                <onback>9500</onback>
+                <onup>9500</onup>
+                <ondown>9000</ondown>
+                <left>614</left>
+                <width>1226</width>
+                <bottom>94</bottom>
+                <orientation>horizontal</orientation>
+                <height>8</height>
+                <texturesliderbackground colordiffuse="main_fg_12">osd/progress-end.png</texturesliderbackground>
+                <texturesliderbar colordiffuse="main_fg_30">osd/progress-end.png</texturesliderbar>
+                <texturesliderbarfocus colordiffuse="$VAR[ColorHighlight]">osd/progress-end.png</texturesliderbarfocus>
+                <animation effect="fade" start="100" end="33" time="400" condition="!Control.HasFocus(60) + !Container.Scrolling">Conditional</animation>
+                <include>Animation_FadeIn</include>
+                <include>Animation_FadeOut</include>
+                <visible>!String.IsEmpty(Window(Home).Property(FocusedList))</visible>
+                <visible>[Control.IsVisible(9501) + !Container(9501).IsUpdating] | [Control.IsVisible(9502) + !Container(9502).IsUpdating]</visible>
+            </control>
+
+            <include>Statusbar_Info_Clock</include>
+        </control>
+    </controls>
+
+</window>

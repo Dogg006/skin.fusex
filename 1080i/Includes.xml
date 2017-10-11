@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foundation -->
+<includes>
+
+    <include file="Defaults.xml" />
+
+    <include file="Includes_Animations.xml" />
+    <include file="Includes_Bottombar.xml" />
+    <include file="Includes_Defs.xml" />
+    <include file="Includes_Dialog.xml" />
+    <include file="Includes_Expression.xml" />
+    <include file="Includes_Global.xml" />
+    <include file="Includes_GlobalSearch.xml" />
+    <include file="Includes_Images.xml" />
+    <include file="Includes_Labels.xml" />
+    <include file="Includes_NextAired.xml" />
+    <include file="Includes_Object.xml" />
+    <include file="Includes_OSD.xml" />
+    <include file="Includes_Statusbar.xml" />
+    <include file="Includes_Home.xml" />
+    <include file="Includes_View_Control.xml" />
+	
+    <include file="Include_Views.xml" />
+    <include file="Include_Views_Widgets.xml" />
+				
+
+    <include file="Includes_VideoLyrics.xml" />
+    <include file="Includes_Weather.xml" />
+    <include file="script-skinshortcuts-includes.xml"/>
+
+    <variable name="ColorHighlight">
+        <value condition="!String.IsEmpty(Skin.String(focuscolor.name))">$INFO[Skin.String(focuscolor.name)]</value>
+        <value>Highlight</value>
+    </variable>
+    <variable name="ColorHighlight2">
+        <value condition="!String.IsEmpty(Skin.String(gradientcolor.name))">$INFO[Skin.String(gradientcolor.name)]</value>
+        <value>GradientHighlight</value>
+    </variable>
+	
+    <variable name="ColorOverlay">
+        <value condition="!String.IsEmpty(Skin.String(overlaycolor.name))">$INFO[Skin.String(overlaycolor.name)]</value>
+        <value>overlayWatched</value>
+    </variable>
+
+    <include name="Dimensions_Fullscreen">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>1080</height>
+    </include>
+</includes>

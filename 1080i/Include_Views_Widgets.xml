@@ -1,0 +1,995 @@
+<includes>
+	############## WIDGET ###################################
+    <include name="Widget_FANART_Layout">
+        <param name="id" default="501" />
+        <param name="setfanart" default="false" />
+        <definition>
+
+            <viewtype label="Wide Fanart">wide</viewtype>
+
+            <width>1850</width>
+            <left>70</left>
+            <top>0</top>
+            <height>1080</height>
+            <onleft>300</onleft>
+
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>horizontal</orientation>
+
+            <scrolltime tween="quadratic">400</scrolltime>
+            
+            <itemlayout width="1850" height="1080">
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Posters_Button">
+                    <param name="id" value="$PARAM[id]" />
+                    <param name="setfanart" value="$PARAM[setfanart]" />
+			
+                </include>
+                <control type="image">
+								
+                                <texture colordiffuse="PosterBack" flipx="true">common/white.png</texture>
+                </control>					
+                            <control type="image">
+								<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+								<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>	
+							
+	                    <control type="image">
+                        <bordersize>5</bordersize>
+                        <include>Defs_Shadow_Small</include>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+						</control>	
+						
+                <control type="group" description="ParentFolder and DefaultIcon">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default)</visible>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+                    </control>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                    </control>
+                </control>
+                <control type="image" description="Poster">
+                    <bordersize>5</bordersize>
+                    <bordertexture border="5">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$VAR[Image_Thumb]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                </control>
+                <include>View_WatchedOverlay</include>
+                <!-- Highlight -->
+				
+			<control type="image">
+			<left>5</left>
+			<width>1840</width>
+            <top>815</top>
+			<height>260</height>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control> 					
+				
+            <control type="group">
+<!-- 				<animation effect="slide" start="0,0" end="-20,0" time="400" condition="Control.HasFocus(301)">Conditional</animation>
+			 -->
+                <left>60</left>
+                <right>30</right>
+                <height>350</height>
+                <top>680</top>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_mainlabel_Widget</font>
+                    <textcolor>main_fg_100</textcolor>
+                    <label>$INFO[ListItem.Label]</label>
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>0</top>
+                    
+                </control>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_sublabel_Widget</font>
+                    <textcolor>$VAR[ColorHighlight]</textcolor>
+					<label>$VAR[Label_Widget_Info]</label>
+					
+                   <!--  <label>$INFO[ListItem.Year,,  •  ]$INFO[ListItem.Duration,,  Min •  ]$INFO[ListItem.Genre,,  •  ]$INFO[ListItem.Rating]</label> -->
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>25%</top>
+                    <bottom>0</bottom>
+                </control>
+                <control type="textbox">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_plotbox_Widget</font>
+                    <textcolor>panel_fg_100</textcolor>
+					<label>$VAR[Label_Widget_InfoPlot]</label>
+                    
+                    <autoscroll delay="10000" time="4000" repeat="5000">Control.HasFocus(301)</autoscroll>
+                    <aligny>center</aligny>
+                    <top>75%</top>
+                    
+                </control>
+
+            </control>
+            <control type="image">
+                <width>400</width>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                <top>40</top>
+                <left>50</left>
+                <height>100</height>
+                <fadetime>300</fadetime>
+                <texture background="true">$VAR[Image_ClearLogo]</texture>
+                <visible>Window.IsVisible(home)</visible>
+				<animation effect="fade" start="100" end="0" time="300" condition="Control.HasFocus(300) | Control.HasFocus(302)">Conditional</animation>
+									
+                <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio]</visible>
+                <visible>!Skin.HasSetting(global.hidefanart) | Window.IsVisible(home)</visible>
+                <visible>!Skin.HasSetting(HideClearLogo)</visible>
+                <visible>[!$EXP[Expression_ShowWeatherWidget] + !$EXP[Expression_ShowSystemInfoWidget]] | !Window.IsVisible(Home)</visible>
+                <visible>!Integer.IsEqual(Window(Home).Property(FocusedList),9502)</visible>
+                <animation effect="slide" start="0" end="0,80" condition="Skin.HasSetting(ShowTopbar)">Conditional</animation>
+                <animation effect="zoom" start="100" end="75" center="auto" condition="Skin.HasSetting(ShowTopbar)">Conditional</animation>
+            </control>
+
+                
+
+            </itemlayout>
+            <focusedlayout width="1850" height="1080">
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Posters_Button">
+                    <param name="id" value="$PARAM[id]" />
+                    <param name="setfanart" value="$PARAM[setfanart]" />
+			
+                </include>
+                <control type="image">
+								
+                                <texture colordiffuse="PosterBack" flipx="true">common/white.png</texture>
+                </control>					
+                            <control type="image">
+								<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+								<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>	
+							
+	                    <control type="image">
+                        <bordersize>5</bordersize>
+                        <include>Defs_Shadow_Small</include>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+						</control>	
+						
+                <control type="group" description="ParentFolder and DefaultIcon">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default)</visible>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+                    </control>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                    </control>
+                </control>
+                <control type="image" description="Poster">
+                    <bordersize>5</bordersize>
+                    <bordertexture border="5">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$VAR[Image_Thumb]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                </control>
+                <include>View_WatchedOverlay</include>
+                <!-- Highlight -->
+				
+			<control type="image">
+			<left>5</left>
+			<width>1840</width>
+            <top>815</top>
+			<height>260</height>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control> 					
+				
+            <control type="group">
+<!-- 				<animation effect="slide" start="0,0" end="-20,0" time="400" condition="Control.HasFocus(301)">Conditional</animation>
+			 -->
+                <left>60</left>
+                <right>30</right>
+                <height>350</height>
+                <top>680</top>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_mainlabel_Widget</font>
+                    <textcolor>main_fg_100</textcolor>
+                    <label>$INFO[ListItem.Label]</label>
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>0</top>
+                    
+                </control>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_sublabel_Widget</font>
+                    <textcolor>$VAR[ColorHighlight]</textcolor>
+					<label>$VAR[Label_Widget_Info]</label>
+					
+                   <!--  <label>$INFO[ListItem.Year,,  •  ]$INFO[ListItem.Duration,,  Min •  ]$INFO[ListItem.Genre,,  •  ]$INFO[ListItem.Rating]</label> -->
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>25%</top>
+                    <bottom>0</bottom>
+                </control>
+                <control type="textbox">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_plotbox_Widget</font>
+                    <textcolor>panel_fg_100</textcolor>
+					<label>$VAR[Label_Widget_InfoPlot]</label>
+                    
+                    <autoscroll delay="10000" time="4000" repeat="5000">Control.HasFocus(301)</autoscroll>
+                    <aligny>center</aligny>
+                    <top>75%</top>
+                    
+                </control>
+
+            </control>
+            <control type="image">
+                <width>400</width>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                <top>40</top>
+                <left>50</left>
+                <height>100</height>
+                <fadetime>300</fadetime>
+                <texture background="true">$VAR[Image_ClearLogo]</texture>
+                <visible>Window.IsVisible(home)</visible>
+				<animation effect="fade" start="100" end="0" time="300" condition="Control.HasFocus(300) | Control.HasFocus(302)">Conditional</animation>
+									
+                <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio]</visible>
+                <visible>!Skin.HasSetting(global.hidefanart) | Window.IsVisible(home)</visible>
+                <visible>!Skin.HasSetting(HideClearLogo)</visible>
+                <visible>[!$EXP[Expression_ShowWeatherWidget] + !$EXP[Expression_ShowSystemInfoWidget]] | !Window.IsVisible(Home)</visible>
+                <visible>!Integer.IsEqual(Window(Home).Property(FocusedList),9502)</visible>
+                <animation effect="slide" start="0" end="0,80" condition="Skin.HasSetting(ShowTopbar)">Conditional</animation>
+                <animation effect="zoom" start="100" end="75" center="auto" condition="Skin.HasSetting(ShowTopbar)">Conditional</animation>
+            </control>
+
+                
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <include name="Widget_PANEL_Layout">
+        <param name="id" default="301" />
+        <definition>
+            <viewtype label="Landscape Info">wide</viewtype>
+<!--             <animation effect="slide" end="-415.33" condition="Integer.IsLess(Container($PARAM[id]).NumItems,3) + !Container.HasParent">Conditional</animation>
+            <animation effect="slide" end="-415.33" condition="Integer.IsLess(Container($PARAM[id]).NumItems,2) + Container.HasParent">Conditional</animation> -->
+            <focusposition>1</focusposition>
+            <movement>1</movement>
+            <description>Plugin Content Widget</description>
+            <width>1800</width>
+			<height>1000</height>
+            <left>140</left>
+            <top>80</top>
+            <bottom>0</bottom>
+			<onleft>300</onleft>
+
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>vertical</orientation>
+            <pagecontrol>60</pagecontrol>
+            <scrolltime tween="quadratic">400</scrolltime>
+            <onfocus>SetProperty(ViewType,Landscape,Home)</onfocus>
+			
+            <itemlayout width="570" height="313.75">
+
+                    <control type="group">
+                        <height>313.75</height>
+                        <control type="image">
+                            <bordersize>10</bordersize>
+                            <include>Defs_Shadow_Small</include>
+                            <aspectratio scalediffuse="false">scale</aspectratio>
+                            <texture colordiffuse="PosterBack">common/white.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>10</bordersize>
+                            <texture colordiffuse="main_bg_70">common/white.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>10</bordersize>
+                            <aspectratio aligny="center">scale</aspectratio>
+                            <texture background="true">$VAR[Image_Thumb]</texture>
+                        </control>
+                        <control type="image">
+                            <bottom>30</bottom>
+                            <top>170</top>
+                            <left>100</left>
+                            <right>100</right>
+                            <aspectratio aligny="bottom">keep</aspectratio>
+                            <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+                        </control>
+                    </control>
+
+
+
+                <include>View_WatchedOverlay</include>
+            </itemlayout>
+
+            <focusedlayout width="570" height="313.75">
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Landscape_Button">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+                <!-- Parent Folder -->
+                            <control type="image">
+								<height>313.75</height>
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+								<height>313.75</height>
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>		
+							
+					    <control type="image">
+						<height>313.75</height>
+                        <bordersize>5</bordersize>
+                        <include>Defs_Shadow_Small</include>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+						</control>		
+						
+                    <control type="group">
+                        <height>313.75</height>
+                        <control type="image">
+                            <bordersize>10</bordersize>
+                            <include>Defs_Shadow_Small</include>
+                            <aspectratio scalediffuse="false">scale</aspectratio>
+                            <texture colordiffuse="PosterBack">common/white.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>10</bordersize>
+                            <texture colordiffuse="main_bg_70">common/white.png</texture>
+                        </control>
+                        <control type="image">
+                            <bordersize>10</bordersize>
+                            <aspectratio aligny="center">scale</aspectratio>
+                            <texture background="true">$VAR[Image_Thumb]</texture>
+                        </control>
+                        <control type="image">
+                            <bottom>30</bottom>
+                            <top>170</top>
+                            <left>100</left>
+                            <right>100</right>
+                            <aspectratio aligny="bottom">keep</aspectratio>
+                            <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+
+                            
+                        </control>
+                    </control>
+                  
+			
+                <include>View_WatchedOverlay</include>
+                <!-- Highlight -->
+            </focusedlayout>
+
+
+
+			</definition>
+
+
+		</include>
+	
+    <include name="Widget_POSTER_Layout">
+        <param name="id" default="560" />
+        <definition>
+            <viewtype label="Big Poster Wall">wide</viewtype>
+
+            <description>Plugin Content Widget</description>
+            <width>1920</width>
+            <left>70</left>
+            <top>25</top>
+
+           
+            <onleft>300</onleft>
+            <focusposition>1</focusposition>
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>horizontal</orientation>
+
+            <scrolltime tween="quadratic">400</scrolltime>
+           
+            <itemlayout width="700" height="1030">
+
+                <!-- Parent Folder -->
+                <control type="group">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default)</visible>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+                    </control>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                    </control>
+                </control>
+                
+                <!-- Poster -->
+                <control type="image">
+                     <bordersize>10</bordersize>
+
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="special://skin/extras/backgrounds/default.jpg" background="true">$INFO[ListItem.Icon]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                </control>
+
+
+                <include>View_WatchedOverlay</include>
+            </itemlayout>
+            <focusedlayout width="700" height="1030">
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Landscape_Button">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+                <!-- Parent Folder -->
+				
+                            <control type="image">
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>	
+
+	                    <control type="image">
+                        <bordersize>5</bordersize>
+                        <include>Defs_Shadow_Small</include>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+						</control>						
+                <control type="group">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default)</visible>
+
+	
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                    </control>
+                </control>
+
+                <!-- Poster -->
+                <control type="image">
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$INFO[ListItem.Icon]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                </control>
+
+
+                <include>View_WatchedOverlay</include>
+
+	
+            <control type="image">
+                <width>400</width>
+				<align>center</align>
+                <aspectratio align="left" aligny="bottom">keep</aspectratio>
+                <top>40</top>
+                <left>200</left>
+                <height>100</height>
+                <fadetime>300</fadetime>
+                <texture background="true">$VAR[Image_ClearLogo]</texture>
+                <visible>Window.IsVisible(home)</visible>
+				<animation effect="fade" start="100" end="0" time="300" condition="Control.HasFocus(300) | Control.HasFocus(302)">Conditional</animation>
+				<animation effect="fade" start="0" end="100" time="2000" delay="20000" condition="Control.HasFocus(301)">Conditional</animation>
+														
+                <visible>!Player.HasMedia | [!Skin.HasSetting(global.showvideo) + Player.HasVideo] | [!Skin.HasSetting(global.showvisualisation) + Player.HasAudio]</visible>
+                <visible>!Skin.HasSetting(global.hidefanart) | Window.IsVisible(home)</visible>
+                <visible>!Skin.HasSetting(HideClearLogo)</visible>
+                <visible>[!$EXP[Expression_ShowWeatherWidget] + !$EXP[Expression_ShowSystemInfoWidget]] | !Window.IsVisible(Home)</visible>
+                <visible>!Integer.IsEqual(Window(Home).Property(FocusedList),9502)</visible>
+                <animation effect="slide" start="0" end="0,80" condition="Skin.HasSetting(ShowTopbar)">Conditional</animation>
+                <animation effect="zoom" start="100" end="75" center="auto" condition="Skin.HasSetting(ShowTopbar)">Conditional</animation>
+            </control>
+            </focusedlayout>
+        </definition>
+    </include>
+		
+    <include name="Widget_POSTERWALL_Layout">
+        <param name="id" default="560" />
+        <definition>
+            <viewtype label="PosterWall">wide</viewtype>
+<!--             <animation effect="slide" end="-415.33" condition="Integer.IsLess(Container($PARAM[id]).NumItems,3) + !Container.HasParent">Conditional</animation>
+            <animation effect="slide" end="-415.33" condition="Integer.IsLess(Container($PARAM[id]).NumItems,2) + Container.HasParent">Conditional</animation> -->
+
+            <description>Plugin Content Widget</description>
+            <width>1850</width>
+            <left>100</left>
+            <top>80</top>
+
+            <bottom>20</bottom>
+            <onleft>300</onleft>
+            
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>vertical</orientation>
+            <pagecontrol>60</pagecontrol>
+            <scrolltime tween="quadratic">400</scrolltime>
+            <onfocus>SetProperty(ViewType,Landscape,Home)</onfocus>
+            <itemlayout width="300" height="441">
+
+                <!-- Parent Folder -->
+                <control type="group">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default)</visible>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+                    </control>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                    </control>
+                </control>
+                
+                <!-- Poster -->
+                <control type="image">
+                        <bordersize>10</bordersize>
+
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="special://skin/extras/backgrounds/default.jpg" background="true">$INFO[ListItem.Icon]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                </control>
+				
+                <include>View_WatchedOverlay</include>
+            </itemlayout>
+            <focusedlayout width="300" height="441">
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Landscape_Button">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+                <!-- Parent Folder -->
+				
+                            <control type="image">
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>	
+
+	                    <control type="image">
+                        <bordersize>5</bordersize>
+                        <include>Defs_Shadow_Small</include>
+                        <texture colordiffuse="PosterBack">common/white.png</texture>
+						</control>						
+                <control type="group">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default)</visible>
+
+	
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                    </control>
+                </control>
+
+                <!-- Poster -->
+                <control type="image">
+					<width>300</width>
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$INFO[ListItem.Icon]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                </control>
+                 <control type="image">
+                    <animation type="Focus">
+                        <effect type="fade" start="0" end="100" time="1000" delay="10000" tween="sine" easing="in" />
+						<effect type="fade" start="100" end="0" time="1000" delay="20000" tween="sine" easing="in" />
+                    </animation>
+                    <animation type="Unfocus">
+                        <effect type="fade" start="100" end="0" time="0" tween="sine" easing="out" />
+                    </animation>		
+					<left>300</left>
+					<width>600</width>
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10" colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$VAR[Image_Thumb]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                </control>               
+                <include>View_WatchedOverlay</include>
+                <!-- Highlight -->
+
+            </focusedlayout>
+        </definition>
+
+		</include>
+
+    <include name="View_Widget_Square">
+        <param name="id" default="301" />
+        <param name="genres" default="false" />
+        <param name="years" default="false" />
+        <param name="studios" default="false" />
+        <param name="directors" default="false" />
+        <param name="countries" default="false" />
+        <param name="actors" default="false" />
+		
+
+		
+        <definition>
+            <viewtype label="$LOCALIZE[31263]">icon</viewtype>
+            <focusposition>0</focusposition>
+            <movement>3</movement>
+            <description>Plugin Content Widget</description>
+            <width>1820</width>
+            <left>120</left>
+            <top>200</top>
+           
+			<height>320</height>
+            <onleft>300</onleft>
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>horizontal</orientation>
+            <scrolltime tween="quadratic">400</scrolltime>
+            <itemlayout width="207.66" height="257">
+
+                <control type="image">
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture colordiffuse="main_fg_12">common/white.png</texture>
+                </control>
+
+                <!-- Parent Folder -->
+                <control type="group">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default) | $PARAM[genres] | $PARAM[years] | $PARAM[countries] | $PARAM[directors] | $PARAM[studios]</visible>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                        <visible>[!Container.Content(genres) + !Container.Content(years) + !Container.Content(studios) + !Container.Content(directors) + !Container.Content(countries) + !$PARAM[genres] + !$PARAM[years] + !$PARAM[countries] + !$PARAM[directors] + !$PARAM[studios]] | ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="image">
+                        <bordersize>50</bordersize>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true" fallback="DefaultFolder.png">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.transparent/,.png]</texture>
+                        <visible>[Container.Content(genres) | $PARAM[genres]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="image">
+                        <bordersize>20</bordersize>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aspectratio scalediffuse="false">keep</aspectratio>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true" fallback="DefaultFolder.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
+                        <visible>[Container.Content(studios) | $PARAM[studios]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="textbox">
+                        <left>20</left>
+                        <right>20</right>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aligny>center</aligny>
+                        <align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                        <font>font_squareview_years</font>
+                        <textcolor>main_fg_70</textcolor>
+                        <visible>[Container.Content(years) | $PARAM[years]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="textbox">
+                        <left>10</left>
+                        <right>10</right>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aligny>center</aligny>
+                        <align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                        <font>Medium</font>
+                        <textcolor>main_fg_70</textcolor>
+                        <visible>[Container.Content(directors) | Container.Content(countries) | $PARAM[directors] | $PARAM[countries]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                </control>
+                
+                <!-- Poster -->
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <top>10</top>
+                    <height>187.66</height>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$VAR[Image_Poster]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                    <visible>!$PARAM[genres] + !$PARAM[years] + !$PARAM[studios] + !$PARAM[countries] + !$PARAM[directors]</visible>
+                </control>
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <height>49.34</height>
+                    <bottom>10</bottom>
+                    <texture colordiffuse="PosterBack">common/white.png</texture>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>49.34</height>
+                    <bottom>10</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>font_albumlistlabel</font>
+                    <textcolor>main_fg_70</textcolor>
+                    <label>$VAR[Label_SquareTitle]</label>
+                </control>
+                <include>View_WatchedOverlay</include>
+            </itemlayout>
+            <focusedlayout width="207.66" height="257">
+
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Square_Button">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+
+	                            <control type="image">
+								<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+							<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>			
+                <control type="image">
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture colordiffuse="main_fg_12">common/white.png</texture>
+                </control>
+
+                <!-- Parent Folder -->
+                <control type="group">
+                    <visible>ListItem.IsParentFolder | String.StartsWith(ListItem.Icon,Default) | $PARAM[genres] | $PARAM[years] | $PARAM[countries] | $PARAM[directors] | $PARAM[studios]</visible>
+                    <control type="image">
+                        <bordersize>10</bordersize>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aspectratio scalediffuse="false">scale</aspectratio>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true">$INFO[ListItem.Icon]</texture>
+                        <visible>[!Container.Content(genres) + !Container.Content(years) + !Container.Content(studios) + !Container.Content(directors) + !Container.Content(countries) + !$PARAM[genres] + !$PARAM[years] + !$PARAM[countries] + !$PARAM[directors] + !$PARAM[studios]] | ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="image">
+                        <bordersize>50</bordersize>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aspectratio scalediffuse="false">keep</aspectratio>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true" fallback="DefaultFolder.png">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.transparent/,.png]</texture>
+                        <visible>[Container.Content(genres) | $PARAM[genres]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="image">
+                        <bordersize>20</bordersize>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aspectratio scalediffuse="false">keep</aspectratio>
+                        <aspectratio aligny="center">scale</aspectratio>
+                        <texture colordiffuse="main_fg_100" background="true" fallback="DefaultFolder.png">$INFO[ListItem.Label,resource://resource.images.studios.white/,.png]</texture>
+                        <visible>[Container.Content(studios) | $PARAM[studios]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="textbox">
+                        <left>20</left>
+                        <right>20</right>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aligny>center</aligny>
+                        <align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                        <font>font_squareview_years</font>
+                        <textcolor>Selected</textcolor>
+                        <visible>[Container.Content(years) | $PARAM[years]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                    <control type="textbox">
+                        <left>10</left>
+                        <right>10</right>
+                        <top>0</top>
+                        <height>207.66</height>
+                        <aligny>center</aligny>
+                        <align>center</align>
+                        <label>$INFO[ListItem.Label]</label>
+                        <font>Medium</font>
+                        <textcolor>Selected</textcolor>
+                        <visible>[Container.Content(directors) | Container.Content(countries) | $PARAM[directors] | $PARAM[countries]] + !ListItem.IsParentFolder</visible>
+                    </control>
+                </control>
+                
+                <!-- Poster -->
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <top>10</top>
+                    <height>187.66</height>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$VAR[Image_Poster]</texture>
+                    <visible>!ListItem.IsParentFolder</visible>
+                    <visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+                    <visible>!$PARAM[genres] + !$PARAM[years] + !$PARAM[studios] + !$PARAM[countries] + !$PARAM[directors]</visible>
+                </control>
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <height>49.34</height>
+                    <bottom>10</bottom>
+                    <texture colordiffuse="PosterBack">common/white.png</texture>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>49.34</height>
+                    <bottom>10</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>font_albumlistlabel</font>
+                    <textcolor>main_fg_70</textcolor>
+                    <label>$VAR[Label_SquareTitle]</label>
+                </control>
+
+                <include>View_WatchedOverlay</include>
+                <!-- Highlight -->
+
+            </focusedlayout>
+
+	</definition>
+    </include>
+		
+    <include name="View_Widget_Favs">
+        <param name="id" default="301" />
+        <param name="genres" default="false" />
+        <param name="years" default="false" />
+        <param name="studios" default="false" />
+        <param name="directors" default="false" />
+        <param name="countries" default="false" />
+        <param name="actors" default="false" />
+		
+
+		
+        <definition>
+            <viewtype label="$LOCALIZE[31263]">icon</viewtype>
+            <focusposition>0</focusposition>
+            <movement>3</movement>
+            <description>Plugin Content Widget</description>
+            <width>1920</width>
+            <left>90</left>
+            <top>100</top>
+           
+			<height>1080</height>
+            <onleft>300</onleft>
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>horizontal</orientation>
+            <scrolltime tween="quadratic">400</scrolltime>
+            <itemlayout width="400" height="450">
+
+                <control type="image">
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture colordiffuse="main_fg_12">common/white.png</texture>
+                </control>
+
+                <!-- Parent Folder -->
+                <!-- Poster -->
+                <control type="image">
+                    <bordersize>10</bordersize>
+                    
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$INFO[ListItem.Icon]</texture>
+
+                </control>
+                <control type="image">
+					<left>10</left>
+					<right>10</right>
+                    <height>60</height>
+                    <bottom>10</bottom>
+                    <texture colordiffuse="PosterBack">common/white.png</texture>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>49.34</height>
+                    <bottom>10</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>SmallBold</font>
+                    <textcolor>main_fg_70</textcolor>
+                    <label>$VAR[Label_SquareTitle]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="400" height="450">
+
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Square_Button">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+
+	                            <control type="image">
+								<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight]" flipx="true">common/white.png</texture>
+                            </control>
+                            <control type="image">
+							<visible>Control.HasFocus($PARAM[id])</visible>
+                                <texture colordiffuse="$VAR[ColorHighlight2]">common/gradient-diffuse-horizontal.png</texture>
+                            </control>			
+<!--                 <control type="image">
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture colordiffuse="main_fg_12">common/white.png</texture>
+                </control> -->
+
+
+                <!-- Poster -->
+                <control type="image">
+
+                    <bordersize>10</bordersize>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultAddonNone.png" background="true">$INFO[ListItem.Icon]</texture>
+
+                </control>
+                <control type="image">
+					<left>10</left>
+					<right>10</right>
+                    <height>60</height>
+                    <bottom>10</bottom>
+                    <texture colordiffuse="PosterBack">common/white.png</texture>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>49.34</height>
+                    <bottom>10</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>SmallBold</font>
+                    <textcolor>main_fg_70</textcolor>
+                    <label>$VAR[Label_SquareTitle]</label>
+                </control>
+
+                <include>View_WatchedOverlay</include>
+                <!-- Highlight -->
+
+            </focusedlayout>
+
+        </definition>
+    </include>
+					
+		
+		
+</includes>	
+############## ###################### ###################	
+	

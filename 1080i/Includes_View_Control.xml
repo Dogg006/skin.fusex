@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="View_WatchedOverlay">
+        <control type="image">
+            <top>10</top>
+            <right>10</right>
+            <width>48</width>
+            <height>48</height>
+            <texture colordiffuse="ff000000">$VAR[Image_Overlay_Corner]</texture>
+			
+			<animation effect="fade" start="100" end="60" time="0" condition="String.StartsWith(ListItem.Overlay,OverlayUnwatched.png) + !Container.Content(tvshows) + !Control.IsVisible(560)" reversible="false">Conditional</animation>
+			<animation effect="fade" start="100" end="80" time="0" condition="String.StartsWith(ListItem.Overlay,OverlayUnwatched.png) + !Container.Content(tvshows) + Control.IsVisible(560)" reversible="false">Conditional</animation>
+
+			<animation effect="fade" start="100" end="60" time="0" condition="Window.IsVisible(home)" reversible="false">Conditional</animation>
+						
+        </control>
+        <control type="image">
+                <animation effect="fade" start="100" end="60" time="0" condition="true" reversible="false">Conditional</animation>
+
+            <top>10</top>
+            <right>58</right>
+            <width>48</width>
+            <height>48</height>
+            <texture colordiffuse="ff000000">$VAR[Image_Overlay_Corner]</texture>
+			<visible>Container.Content(tvshows)| Control.IsVisible(501)</visible>
+			<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0)</visible>
+			<visible>Skin.HasSetting(ShowTotal_Seasons)</visible>
+        </control>
+		
+        <control type="image">
+            <animation effect="fade" start="100" end="60" time="0" condition="true" reversible="false">Conditional</animation>
+
+            <top>10</top>
+            <right>58</right>
+            <width>48</width>
+            <height>48</height>
+            <texture colordiffuse="ff000000">common/white.png</texture>
+			<visible>Control.IsVisible(560)</visible>
+			<visible>!Skin.HasSetting(ShowTotal_Seasons)</visible>
+			<visible>!ListItem.IsParentFolder</visible>
+			<visible>Container.content(movies)|Container.content(tvshows)</visible>
+        </control>
+
+        <control type="image">
+            <top>10</top>
+            <right>10</right>
+            <width>48</width>
+            <height>48</height>
+            <texture colordiffuse="$VAR[ColorOverlay]">$VAR[Image_Overlay_Corner_Watched]</texture>
+			
+        </control>
+        <control type="image">
+            <top>10</top>
+            <right>10</right>
+            <width>48</width>
+            <height>48</height>
+            <texture flipx="true" flipy="true" colordiffuse="$VAR[ColorOverlay]">$VAR[Image_Overlay_Corner_Watched]</texture>
+        </control>		
+        <control type="label">
+            <top>15</top>
+			
+            <right>10</right>
+            <width>50</width>
+            <height>35</height>
+            <font>font_unwatched</font>
+            <align>center</align>
+            <textcolor>Selected</textcolor>
+            <label>$INFO[ListItem.Property(UnWatchedEpisodes)]</label>
+			
+           <visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0)</visible>
+        </control>
+        <control type="label">
+            <top>15</top>
+			
+            <right>60</right>
+            <width>50</width>
+            <height>35</height>
+            <font>font_unwatched</font>
+            <align>center</align>
+            <textcolor>Selected</textcolor>
+            <label>$INFO[ListItem.Property(TotalSeasons)]</label>
+			<visible>Skin.HasSetting(ShowTotal_Seasons)</visible>
+			<visible>Container.Content(tvshows)| Control.IsVisible(501)</visible>
+			<visible>Integer.IsGreater(ListItem.Property(UnWatchedEpisodes),0)</visible>
+
+        </control>
+		
+		
+        <control type="label">
+            <top>15</top>
+			
+            <right>57</right>
+            <width>50</width>
+            <height>35</height>
+            <font>font_unwatched</font>
+            <align>center</align>
+            <textcolor>Selected</textcolor>
+            <label>$INFO[ListItem.Rating]</label>
+			<visible>Control.IsVisible(560)</visible>
+        </control>
+
+        <control type="image">
+            <top>15</top>
+            <left>15</left>
+            <width>36</width>
+            <height>36</height>
+            <texture colordiffuse="$VAR[ColorHighlight2]">$VAR[Image_Additonal_Info]</texture>
+        </control>
+
+
+
+
+		</include>
+
+    <include name="View_Home_Widget">
+        <control type="group">
+            <visible>!$EXP[Expression_ShowWeatherWidget]</visible>
+            <visible>!$EXP[Expression_ShowSystemInfoWidget]</visible>
+
+						
+            <control type="group">
+                <animation effect="fade" start="100" end="0" time="0" condition="Container(301).IsUpdating" reversible="false">Conditional</animation>
+                <animation effect="fade" start="0" end="100" time="350" tween="cubic" easing="inout" condition="!Container(301).IsUpdating" reversible="false">Conditional</animation>
+				<control type="list" id="301">
+					<visible>String.IsEqual(Container(300).ListItem.Property(widgetStyle), fanart) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), poster)
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), posterwall)
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), panel) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), addons) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), favourites)</visible>
+					<autoscroll time="15000">!Control.HasFocus(301)</autoscroll>
+					<include content="Widget_FANART_Layout">
+						<param name="id" value="301" />
+					</include>
+					<content sortby="$INFO[Container(300).ListItem.Property(WidgetSort)]" sortorder="$INFO[Container(300).ListItem.Property(WidgetDirection)]" 
+					target="$INFO[Container(300).ListItem.Property(widgetTarget)]">$INFO[Container(300).ListItem.Property(widgetPath)]</content>
+				</control>
+				<control type="panel" id="301">
+					<visible>String.IsEqual(Container(300).ListItem.Property(widgetStyle), panel) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), fanart) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), posterwall) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), addons) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), favourites)</visible>
+					
+					<include content="Widget_PANEL_Layout">
+						<param name="id" value="301" />
+					</include>
+					<content sortby="$INFO[Container(300).ListItem.Property(WidgetSort)]" sortorder="$INFO[Container(300).ListItem.Property(WidgetDirection)]" 
+					target="$INFO[Container(300).ListItem.Property(widgetTarget)]">$INFO[Container(300).ListItem.Property(widgetPath)]</content>
+				</control>
+				<control type="panel" id="301">
+					<visible>String.IsEqual(Container(300).ListItem.Property(widgetStyle), poster) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), fanart) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), panel)
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), posterwall)
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), addons) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), favourites)</visible>
+					
+					<include content="Widget_POSTER_Layout">
+						<param name="id" value="301" />
+					</include>
+					<content sortby="$INFO[Container(300).ListItem.Property(WidgetSort)]" sortorder="$INFO[Container(300).ListItem.Property(WidgetDirection)]" 
+					target="$INFO[Container(300).ListItem.Property(widgetTarget)]">$INFO[Container(300).ListItem.Property(widgetPath)]</content>
+				</control>	
+				<control type="panel" id="301">
+					<visible>String.IsEqual(Container(300).ListItem.Property(widgetStyle), posterwall) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), fanart) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), panel)
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), poster)
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), addons) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), favourites)</visible>
+					
+					<include content="Widget_POSTERWALL_Layout">
+						<param name="id" value="301" />
+					</include>
+					<content sortby="$INFO[Container(300).ListItem.Property(WidgetSort)]" sortorder="$INFO[Container(300).ListItem.Property(WidgetDirection)]" 
+					target="$INFO[Container(300).ListItem.Property(widgetTarget)]">$INFO[Container(300).ListItem.Property(widgetPath)]</content>
+				</control>					
+				<control type="panel" id="301">
+					<visible>!String.IsEqual(Container(300).ListItem.Property(widgetStyle), poster) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), panel) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), fanart) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetStyle), posterwall)					
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), addons) 
+					+ !String.IsEqual(Container(300).ListItem.Property(widgetType), favourites)</visible>
+					
+					<include content="Widget_FANART_Layout">
+						<param name="id" value="301" />
+					</include>
+					<content sortby="$INFO[Container(300).ListItem.Property(WidgetSort)]" sortorder="$INFO[Container(300).ListItem.Property(WidgetDirection)]" 
+					target="$INFO[Container(300).ListItem.Property(widgetTarget)]">$INFO[Container(300).ListItem.Property(widgetPath)]</content>
+				</control>						
+				<include>skinshortcuts-template-home-widget</include>
+				
+            </control>
+
+			
+            <control type="image">
+                <animation effect="fade" start="100" end="75" time="0" condition="true">Conditional</animation>
+
+                <height>32</height>
+                <width>32</width>
+                <aspectratio aligny="center">keep</aspectratio>
+                <bottom>520</bottom>
+                <right>-510</right>
+                <texture colordiffuse="panel_fg_70">common/arrow-small-right.png</texture>
+                <visible>Container.HasNext | Container(301).HasNext</visible>
+				<visible>Control.HasFocus(301) + String.IsEqual(Container(300).ListItem.Property(widgetStyle), fanart)</visible>
+            </control>	
+            <control type="image">
+                <animation effect="fade" start="100" end="75" time="0" condition="true">Conditional</animation>
+
+                <height>32</height>
+                <width>32</width>
+                <aspectratio aligny="center">keep</aspectratio>
+                <bottom>520</bottom>
+                <left>30</left>
+                <texture flipx="true" colordiffuse="panel_fg_70">common/arrow-small-right.png</texture>
+                <visible>Container.HasPrevious | Container(301).HasPrevious</visible>
+				<visible>Control.HasFocus(301) + String.IsEqual(Container(300).ListItem.Property(widgetStyle), fanart)</visible>
+            </control>				
+            <control type="group">
+                <animation effect="fade" start="100" end="0" time="0" condition="Container(301).IsUpdating" reversible="false">Conditional</animation>
+                <animation effect="fade" start="0" end="100" time="350" tween="cubic" easing="inout" condition="!Container(301).IsUpdating" reversible="false">Conditional</animation>
+                <!-- <include>skinshortcuts-template-home-submenu-widget</include> -->
+            </control>
+			
+
+        </control>
+                <control type="label">
+					<visible>[String.IsEqual(Container(300).ListItem.Property(widgetStyle), panel)|String.IsEqual(Container(300).ListItem.Property(widgetStyle), posterwall)] + Control.HasFocus(301)</visible>
+                    <left>100</left>
+                    
+					<width>1800</width>
+                    <font>font_infobar_mainlabel_Widget_2</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>$INFO[Container(301).ListItem(0).Label]</label>
+                    <scroll>true</scroll>
+                    <align>center</align>
+                    <top>-1030</top>
+
+                </control>
+    </include>
+
+    <include name="View_ExtendedInfo">
+        <control type="fixedlist" id="500">
+
+            <ondown>9400</ondown>
+            <include content="View_Posters_Layout">
+                <param name="id" value="500" />
+            </include>
+        </control>
+    </include>
+
+    <include name="View_PVR">
+        <control type="group" id="50">
+            <control type="fixedlist" id="54">
+                <include content="View_List_Layout">
+                    <param name="id" value="54" />
+                </include>
+            </control>
+        </control>
+    </include>
+
+    <include name="View_EventLog">
+        <control type="list" id="50">
+            <orientation>vertical</orientation>
+            <include content="View_Tiles_Layout">
+                <param name="id" value="50" />
+            </include>
+        </control>
+    </include>
+
+    <include name="View_AddonsPage">
+        <control type="panel" id="50">
+			
+            <include content="View_Square_Layout">
+                <param name="id" value="50" />
+            </include>
+            <content>
+                <item>
+                    <label>1037</label>
+                    <icon>DefaultAddonVideo.png</icon>
+                    <onclick>ActivateWindow(videos,addons://sources/video/,return)</onclick>
+                </item>
+                <item>
+                    <label>1038</label>
+                    <icon>DefaultAddonMusic.png</icon>
+                    <onclick>ActivateWindow(music,addons://sources/audio/,return)</onclick>
+                </item>
+                <item>
+                    <label>1039</label>
+                    <icon>DefaultAddonPicture.png</icon>
+                    <onclick>ActivateWindow(pictures,addons://sources/image/,return)</onclick>
+                </item>
+                <item>
+                    <label>1043</label>
+                    <icon>DefaultAddonProgram.png</icon>
+                    <onclick>ActivateWindow(programs,addons://sources/executable/,return)</onclick>
+                </item>
+                <item>
+                    <label>24032</label>
+                    <icon>DefaultAddonsInstalled.png</icon>
+                    <onclick>ActivateWindow(addonbrowser,addons://user/,return)</onclick>
+                </item>
+            </content>
+        </control>
+    </include>
+
+    <include name="View_Library">
+        <include>View_Episodes</include>
+        <include>View_Actors</include>
+        <include>View_Square</include>
+        <include>View_List</include>
+        <include>View_Fanarts</include>
+        <include>View_Landscapes</include>
+        <include>View_Posters</include>
+        <include>View_Banner</include>
+        <include>View_Netflix</include>
+        <include>View_WideFanart</include>		
+    </include>
+
+    <include name="View_Posters">
+        <control type="panel" id="56">
+			 <visible>Container.content(movies) | Container.content(tvshows) |
+			 Container.content(seasons)</visible>
+			 <include>View_PosterWall_Layout</include>
+			 <include>Object_AlphabetStrip</include>
+        </control>
+        <control type="fixedlist" id="560">
+			 <visible>Container.content(movies) | Container.content(tvshows) |
+			 Container.content(seasons)</visible>
+			 <include>View_BigPosterWall</include>
+			 <!-- <include>Object_AlphabetStrip</include> -->
+        </control>
+		
+    </include>		
+		
+    <include name="View_WideFanart">		
+        <control type="list" id="501">
+			 <visible>Container.content(tvshows) | Container.Content(movies)</visible>
+			 <include>View_WideFanart_Layout</include>
+        </control>			
+		
+		    <control type="image">
+				<visible>Control.IsVisible(501)</visible>
+                <height>32</height>
+                <width>32</width>
+                <aspectratio aligny="center">keep</aspectratio>
+				<left>-500</left>
+				<top>-200</top>
+                <texture flipx="true" colordiffuse="panel_fg_70">common/arrow-small-right.png</texture>
+                <visible>Container.HasPrevious | Container(501).HasPrevious</visible>
+            </control>	
+		    <control type="image">
+				<visible>Control.IsVisible(501)</visible>
+                <height>32</height>
+                <width>32</width>
+                <aspectratio aligny="center">keep</aspectratio>
+				<left>1320</left>
+				<top>-200</top>
+                <texture colordiffuse="panel_fg_70">common/arrow-small-right.png</texture>
+                <visible>Container.HasNext | Container(501).HasNext</visible>
+            </control>	
+		
+		
+		
+    </include>
+
+    <include name="View_Netflix">
+    <control type="fixedlist" id="500">
+			 <visible>Container.content(episodes)</visible>
+			 <include>View_Netflix_Episodes</include>
+        </control>	
+	</include>
+ 
+	<include name="View_Banner">
+        <control type="panel" id="59">
+			 <visible>Container.content(movies) | Container.content(tvshows)</visible>
+			 <include>View_Banner_List</include>
+        </control>
+    </include>
+
+    <include name="View_Fanarts">
+        <control type="panel" id="55">
+			 <visible>Container.content(movies) | Container.content(tvshows) |
+			 Container.Content(episodes)</visible>
+			 <include>View_Landscape_Layout</include>
+        </control>
+        <control type="panel" id="58">
+			 <visible>Container.content(movies) | Container.content(tvshows) |
+			 Container.Content(episodes)</visible>
+			 <include>View_LandscapeInfo_Layout</include>
+			 
+        </control>
+        <control type="panel" id="57">
+			 <visible>Container.content(movies) | Container.content(tvshows) |
+			 Container.Content(episodes)</visible>
+			 <include>View_LandscapeInfo2_Layout</include>
+			 
+        </control>
+    </include>
+
+    <include name="View_Episodes">
+        <control type="list" id="50">
+            <visible>Container.Content(episodes)</visible>
+            <include>View_List_Layout_Episodes</include>
+        </control>
+    </include>
+	
+    <include name="View_List">
+        <control type="list" id="54">
+			 <visible>Container.content(movies) | Container.content(tvshows) |
+			 Container.content(seasons)</visible>
+
+            <include>View_List_Layout</include>
+            <include>Object_AlphabetStrip</include>
+        </control>
+    </include>	
+	
+    <include name="View_Square">
+	
+        <control type="panel" id="53">
+			<visible>!Container.Content(files) + !Container.Content(episodes) + !Container.content(movies) + !Container.content(tvshows) + !Container.content(seasons)</visible>
+
+           <include>View_Square_Layout_Files</include>
+		   <include>Object_AlphabetStrip</include>
+        </control>
+        <control type="list" id="51">
+			<visible>Container.content(files)</visible>
+            <include>View_List_Layout_addons</include>
+        </control>		
+		
+    </include>
+	
+	<include name="View_Actors">
+        <control type="panel" id="52">
+            <visible>Container.Content(actors)</visible>
+            <include content="View_Square_Layout">
+                <param name="actors" value="true" />
+                <param name="id" value="52" />
+            </include>
+        </control>
+    </include>
+	################ WIDGET ######################
+    <include name="View_Posters_Button">
+        <control type="button">
+            <visible allowhiddenfocus="true">false</visible>
+            <onfocus>SetProperty(ContextPosition,$INFO[Container($PARAM[id]).Position],Home)</onfocus>
+            <onfocus condition="!Integer.IsLess(Container($PARAM[id]).NumItems,7)">SetProperty(ContextModifier,0,Home)</onfocus>
+            <onfocus condition="Integer.IsLess(Container($PARAM[id]).NumItems,7)">SetProperty(ContextModifier,1,Home)</onfocus>
+            <onfocus condition="Integer.IsLess(Container($PARAM[id]).NumItems,5)">SetProperty(ContextModifier,2,Home)</onfocus>
+            <onfocus condition="Integer.IsLess(Container($PARAM[id]).NumItems,3)">SetProperty(ContextModifier,3,Home)</onfocus>
+            <onfocus condition="$PARAM[setfanart]">SetProperty(ListFanartContent,$INFO[Container(9502).ListItem.Art(fanart)],Home)</onfocus>
+        </control>
+    </include>
+	
+    <include name="View_Tiles_Button">
+        <control type="button">
+            <visible allowhiddenfocus="true">false</visible>
+            <onfocus>SetProperty(ContextPosition,$INFO[Container($PARAM[id]).Column],Home)</onfocus>
+            <onfocus>SetProperty(ContextRow,$INFO[Container($PARAM[id]).Row],Home)</onfocus>
+        </control>
+    </include>
+
+    <include name="View_Tiles_Layout">
+        <param name="id" default="52" />
+        <definition>
+            <viewtype label="$LOCALIZE[31039]">list</viewtype>
+            <focusposition>2</focusposition>
+            <movement>2</movement>
+            <description>Plugin Content Widget</description>
+            <width>1424</width>
+            <left>70</left>
+            <top>30</top>
+            <height>257</height>
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>horizontal</orientation>
+            <pagecontrol>60</pagecontrol>
+            <onfocus>SetProperty(ViewType,Tiles,Home)</onfocus>
+            <scrolltime tween="quadratic">400</scrolltime>
+            <itemlayout width="415.33" height="128.5">
+                <include content="View_List_ItemLayout">
+                    <param name="id" value="$PARAM[id]"/>
+                </include>
+            </itemlayout>
+            <focusedlayout width="415.33" height="128.5">
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Tiles_Button">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+                <include content="View_List_FocusedLayout">
+                    <param name="id" value="$PARAM[id]"/>
+                </include>
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <include name="View_Square_Button">
+        <control type="button">
+            <visible allowhiddenfocus="true">false</visible>
+            <onfocus>SetProperty(ContextPosition,$INFO[Container($PARAM[id]).Position],Home)</onfocus>
+            <onfocus condition="!Integer.IsLess(Container($PARAM[id]).NumItems,5)">SetProperty(ContextModifier,0,Home)</onfocus>
+            <onfocus condition="Integer.IsLess(Container($PARAM[id]).NumItems,5)">SetProperty(ContextModifier,1,Home)</onfocus>
+            <onfocus condition="Integer.IsLess(Container($PARAM[id]).NumItems,3)">SetProperty(ContextModifier,2,Home)</onfocus>
+        </control>
+    </include>
+
+    <include name="View_Actor_Button">
+        <control type="button">
+            <visible allowhiddenfocus="true">false</visible>
+            <onfocus>SetProperty(ContextPosition,$INFO[Container($PARAM[id]).Position],Home)</onfocus>
+            <onfocus condition="!Integer.IsLess(Container($PARAM[id]).NumItems,5)">SetProperty(ContextModifier,0,Home)</onfocus>
+            <onfocus condition="Integer.IsLess(Container($PARAM[id]).NumItems,5)">SetProperty(ContextModifier,1,Home)</onfocus>
+            <onfocus condition="Integer.IsLess(Container($PARAM[id]).NumItems,3)">SetProperty(ContextModifier,2,Home)</onfocus>
+        </control>
+    </include>
+
+    <include name="View_Actor_Layout">
+        <param name="id" default="53" />
+        <param name="label2" default="$INFO[ListItem.Label2]"/>
+        <definition>
+            <animation effect="slide" end="-207.66" condition="Integer.IsLess(Container($PARAM[id]).NumItems,5) + !Container.HasParent">Conditional</animation>
+            <animation effect="slide" end="-207.66" condition="Integer.IsLess(Container($PARAM[id]).NumItems,3) + !Container.HasParent">Conditional</animation>
+            <animation effect="slide" end="-207.66" condition="Integer.IsLess(Container($PARAM[id]).NumItems,4) + Container.HasParent">Conditional</animation>
+            <animation effect="slide" end="-207.66" condition="Integer.IsLess(Container($PARAM[id]).NumItems,2) + Container.HasParent">Conditional</animation>
+            <focusposition>2</focusposition>
+            <movement>3</movement>
+            <description>Plugin Content Widget</description>
+            <width>1424</width>
+            <left>70</left>
+            <top>30</top>
+            <bottom>20</bottom>
+            <onleft>$PARAM[id]</onleft>
+            <onright>$PARAM[id]</onright>
+				
+            <include condition="!Window.IsVisible(DialogVideoInfo.xml)">View_Movement_Vertical</include>
+            <preloaditems>2</preloaditems>
+            <orientation>horizontal</orientation>
+            <pagecontrol>60</pagecontrol>
+            <onfocus>SetProperty(ViewType,Square,Home)</onfocus>
+            <scrolltime tween="quadratic">400</scrolltime>
+            <itemlayout width="207.66" height="257">
+
+                <control type="image">
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture colordiffuse="main_fg_12">common/white.png</texture>
+                </control>
+
+                <!-- Poster -->
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <top>10</top>
+                    <bottom>10</bottom>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultArtist.png" background="true">$VAR[Image_Poster]</texture>
+                </control>
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <height>100</height>
+                    <bottom>10</bottom>
+                    <texture colordiffuse="bf000000">common/gradient-actor.png</texture>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>30</height>
+                    <bottom>42</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>font_albumlistlabel</font>
+                    <textcolor>main_fg_100</textcolor>
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>30</height>
+                    <bottom>18</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>font_albumlistlabel</font>
+                    <textcolor>main_fg_70</textcolor>
+                    <label>$PARAM[label2]</label>
+                </control>
+            </itemlayout>
+            <focusedlayout width="207.66" height="257">
+
+                <include condition="Skin.HasSetting(ContextPosition)" content="View_Actor_Button">
+                    <param name="id" value="$PARAM[id]" />
+                </include>
+                <control type="image">
+                    <bordersize>10</bordersize>
+                    <bordertexture border="10">common/nofocus-shadow10.png</bordertexture>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture colordiffuse="main_fg_12">common/white.png</texture>
+                </control>
+
+                <!-- Poster -->
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <top>10</top>
+                    <bottom>10</bottom>
+                    <aspectratio scalediffuse="false">scale</aspectratio>
+                    <texture fallback="DefaultArtist.png" background="true">$VAR[Image_Poster]</texture>
+                </control>
+                <control type="image">
+                    <left>10</left>
+                    <right>10</right>
+                    <height>100</height>
+                    <bottom>10</bottom>
+                    <texture colordiffuse="bf000000">common/gradient-actor.png</texture>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>30</height>
+                    <bottom>42</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>font_albumlistlabel</font>
+                    <textcolor>main_fg_100</textcolor>
+                    <label>$INFO[ListItem.Label]</label>
+                </control>
+                <control type="label">
+                    <left>20</left>
+                    <right>20</right>
+                    <height>30</height>
+                    <bottom>18</bottom>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <font>font_albumlistlabel</font>
+                    <textcolor>main_fg_70</textcolor>
+                    <label>$PARAM[label2]</label>
+                </control>
+                <!-- Highlight -->
+				<include>View_WatchedOverlay</include>
+
+            </focusedlayout>
+        </definition>
+    </include>
+
+    <include name="View_Movement_Vertical">
+
+        <onup condition="Window.IsVisible(Home)">300</onup>
+
+        <ondown condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + Control.IsVisible(8000)">8000</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + Control.IsVisible(60)">61</ondown>
+        <ondown condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + !Control.IsVisible(60) + !Control.IsVisible(8000) + Control.IsVisible(9400)">9400</ondown>
+        <ondown condition="!String.IsEmpty(Window(Home).Property(HideBottomBar))">ClearProperty(HideBottomBar,Home)</ondown>
+    
+        <include>View_Movement_OnBack</include>
+        <include>View_Movement_OnFocus</include>
+    </include>
+
+    <include name="View_Movement_Horizontal">
+        <onright condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + Control.IsVisible(60)">61</onright>
+        <onleft condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + Control.IsVisible(9400)">9400</onleft>
+        <onleft condition="!String.IsEmpty(Window(Home).Property(HideBottomBar))">ClearProperty(HideBottomBar,Home)</onleft>
+        <onright condition="!String.IsEmpty(Window(Home).Property(HideBottomBar))">ClearProperty(HideBottomBar,Home)</onright>
+        <include>View_Movement_OnBack</include>
+        <include>View_Movement_OnFocus</include>
+    </include>
+
+    <include name="View_Movement_OnBack">
+        <oninfo condition="!String.IsEmpty(Window(Home).Property(HideBottomBar))">ClearProperty(HideBottomBar,Home)</oninfo>
+        <onback condition="!String.IsEmpty(Window(Home).Property(HideBottomBar))">ClearProperty(HideBottomBar,Home)</onback>
+        <onback condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + !Window.IsVisible(Home) + !Window.IsVisible(1101) + !Window.IsVisible(1102) + !Window.IsVisible(1103) + !Window.IsVisible(1104) + !Window.IsVisible(1105) + !Window.IsVisible(1106) + !Window.IsVisible(1107) + !Window.IsVisible(1108) + !Window.IsVisible(1109) + !Window.IsVisible(1111) + !String.IsEmpty(Window(Home).Property(ReturnWindow)) + String.IsEqual(Container.FolderPath,Window(Home).Property(ContainerFolderPath)) + !Skin.HasSetting(EnableNeverHome)">AlarmClock(ReturnHub,$INFO[Window(Home).Property(ReturnWindow)],00:00,silent)</onback>
+        <onback condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + String.IsEqual(Container.FolderPath,Window(Home).Property(ContainerFolderPath)) + Skin.HasSetting(EnableNeverHome) + $EXP[Expression_ReplaceWindowHome] + !Window.IsVisible(Home)">ReplaceWindow(Home)</onback>
+        <onback condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + String.IsEqual(Container.FolderPath,Window(Home).Property(ContainerFolderPath)) + Skin.HasSetting(EnableNeverHome) + !$EXP[Expression_ReplaceWindowHome]">300</onback>
+        <onback condition="String.IsEmpty(Window(Home).Property(HideBottomBar)) + Window.IsVisible(Home)">300</onback>
+    </include>
+
+    <include name="View_Movement_OnFocus">
+        <onfocus>SetProperty(ShowInfobar,1,Home)</onfocus>
+        <onfocus>SetProperty(ShowTopbar,0,Home)</onfocus>
+    </include>
+
+    <include name="View_Info_Movement">
+        <onup>ClearProperty(FocusedList)</onup>
+        <ondown>60</ondown>
+        <onup>9000</onup>
+    </include>
+
+    <include name="View_Info_Movement_Horizontal">
+        <onleft>ClearProperty(FocusedList)</onleft>
+        <onright>60</onright>
+        <onleft>9000</onleft>
+    </include>
+
+    <include name="View_List_ItemLayout">
+        <control type="image">
+            <bordersize>10</bordersize>
+            <bordertexture border="12">common/nofocus-shadow10.png</bordertexture>
+            <texture colordiffuse="main_fg_12">common/white.png</texture>
+        </control>
+        <control type="group">
+            <control type="image">
+                <left>10</left>
+                <width>108.5</width>
+                <bottom>10</bottom>
+                <top>10</top>
+                <texture colordiffuse="main_fg_12">common/white.png</texture>
+            </control>
+            <control type="image">
+                <left>10</left>
+                <width>108.5</width>
+                <bottom>10</bottom>
+                <top>10</top>
+                <aspectratio>scale</aspectratio>
+                <texture background="true">$INFO[ListItem.Icon]</texture>
+            </control>
+            <control type="textbox">
+                <left>138.5</left>
+                <right>30</right>
+                <top>10</top>
+                <bottom>10</bottom>
+                <aligny>center</aligny>
+                <textcolor>main_fg_70</textcolor>
+                <font>font_listlabel</font>
+                <label>$INFO[ListItem.Label]$INFO[ListItem.Label2, [COLOR=main_fg_30](,)[/COLOR]]</label>
+                <visible>![Window.IsVisible(1101) | Window.IsVisible(1102) | Window.IsVisible(1103) | Window.IsVisible(1104) | Window.IsVisible(1105) | Window.IsVisible(1106) | Window.IsVisible(1107) | Window.IsVisible(1108) | Window.IsVisible(1109)]</visible>
+            </control>
+            <control type="textbox">
+                <left>138.5</left>
+                <right>30</right>
+                <top>10</top>
+                <bottom>10</bottom>
+                <aligny>center</aligny>
+                <textcolor>main_fg_70</textcolor>
+                <font>font_listlabel</font>
+                <label>$INFO[ListItem.Label]</label>
+                <visible>[Window.IsVisible(1101) | Window.IsVisible(1102) | Window.IsVisible(1103) | Window.IsVisible(1104) | Window.IsVisible(1105) | Window.IsVisible(1106) | Window.IsVisible(1107) | Window.IsVisible(1108) | Window.IsVisible(1109)]</visible>
+            </control>
+        </control>
+    </include>
+
+    <include name="View_List_FocusedLayout">
+        <control type="image">
+            <bordersize>10</bordersize>
+            <bordertexture border="12">common/nofocus-shadow10.png</bordertexture>
+            <texture colordiffuse="$VAR[ColorHighlight]">common/white.png</texture>
+        </control>
+        <control type="group">
+            <control type="image">
+                <left>10</left>
+                <width>108.5</width>
+                <bottom>10</bottom>
+                <top>10</top>
+                <texture colordiffuse="1fffffff">common/white.png</texture>
+            </control>
+            <control type="image">
+                <left>10</left>
+                <width>108.5</width>
+                <bottom>10</bottom>
+                <top>10</top>
+                <aspectratio>scale</aspectratio>
+                <texture background="true">$INFO[ListItem.Icon]</texture>
+            </control>
+            <control type="textbox">
+                <left>138.5</left>
+                <right>30</right>
+                <top>10</top>
+                <bottom>10</bottom>
+                <aligny>center</aligny>
+                <textcolor>Selected</textcolor>
+                <font>font_listlabel</font>
+                <label>$INFO[ListItem.Label]$INFO[ListItem.Label2, [COLOR=bfededed](,)[/COLOR]]</label>
+                <visible>![Window.IsVisible(1101) | Window.IsVisible(1102) | Window.IsVisible(1103) | Window.IsVisible(1104) | Window.IsVisible(1105) | Window.IsVisible(1106) | Window.IsVisible(1107) | Window.IsVisible(1108) | Window.IsVisible(1109)]</visible>
+            </control>
+            <control type="textbox">
+                <left>138.5</left>
+                <right>30</right>
+                <top>10</top>
+                <bottom>10</bottom>
+                <aligny>center</aligny>
+                <textcolor>Selected</textcolor>
+                <font>font_listlabel</font>
+                <label>$INFO[ListItem.Label]</label>
+                <visible>[Window.IsVisible(1101) | Window.IsVisible(1102) | Window.IsVisible(1103) | Window.IsVisible(1104) | Window.IsVisible(1105) | Window.IsVisible(1106) | Window.IsVisible(1107) | Window.IsVisible(1108) | Window.IsVisible(1109)]</visible>
+            </control>
+        </control>
+    </include>
+	
+</includes>
+

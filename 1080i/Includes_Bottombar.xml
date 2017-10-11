@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <!-- ========= -->
+    <!-- Bottombar -->
+    <!-- ========= -->
+    <include name="Bottombar_widget">
+        <control type="group">
+            <include>Animation_Bottombar</include>
+
+            <control type="group">
+				<width>1920</width>
+                <height>1080</height>
+				<include>Bottombar_Content</include>
+            </control>
+            <include>Bottombar_Infobar_widget</include>
+            <control type="group">
+                <visible>$EXP[Expression_ShowWeatherWidget]</visible>
+                <visible>Window.IsVisible(home)</visible>
+                <include condition="Window.IsVisible(home)">Weather</include>
+            </control>
+            <control type="group">
+                <visible>$EXP[Expression_ShowSystemInfoWidget]</visible>
+                <visible>Window.IsVisible(home)</visible>
+                <include condition="Window.IsVisible(home)">Object_SystemInfoWidget</include>
+            </control>
+			
+
+        </control> 
+    </include>
+
+	
+    <include name="Bottombar">
+	
+
+		
+        <control type="group">
+			
+            <!-- <include>Animation_Bottombar</include> -->
+			<include>Bottombar_Infobar</include> 
+            <control type="group">
+                <top>0</top>
+                <left>0</left>
+                <right>0</right>
+
+                <include>Bottombar_Content</include>
+            </control>
+            <control type="group">
+                <visible>$EXP[Expression_ShowWeatherWidget]</visible>
+                <visible>Window.IsVisible(home)</visible>
+                <include condition="Window.IsVisible(home)">Weather</include>
+            </control>
+            <control type="group">
+                <visible>$EXP[Expression_ShowSystemInfoWidget]</visible>
+                <visible>Window.IsVisible(home)</visible>
+                <include condition="Window.IsVisible(home)">Object_SystemInfoWidget</include>
+            </control>
+        </control> 
+		
+
+    </include>
+
+    <include name="Bottombar_BusySpinner">
+        <control type="group">
+			<left>0</left>
+            <visible>Window.IsVisible(home)</visible>
+            <animation effect="fade" start="100" end="0" time="0" condition="!Container(301).IsUpdating" reversible="false">Conditional</animation>
+            <animation effect="fade" start="0" end="100" time="350" tween="cubic" easing="inout" condition="Container(301).IsUpdating" reversible="false">Conditional</animation>
+            <include content="Defs_BusySpinner">
+                <param name="label" value=""/>
+            </include>
+        </control>
+    </include>
+
+	
+
+    <include name="Bottombar_Content">
+        <control type="group">
+			
+            <include>Animation_Bottombar_Right</include>
+            <include>Animation_FadeInOut_Conditional</include>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>
+            <visible>[!Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml)] | Window.IsVisible(script-script.extendedinfo-VideoList.xml)</visible>
+            <include>Bottombar_Views</include>
+            <include condition="!Window.IsVisible(script-script.extendedinfo-VideoList.xml)">Object_AlphabetStrip</include>
+        </control>
+        <control type="group">
+			
+            <include>Animation_FadeInOut_Conditional</include>
+            <visible>Window.IsVisible(MyWeather.xml)</visible>
+            <include>Weather</include>
+        </control>
+        <control type="group">
+			
+            <include>Animation_FadeInOut_Conditional</include>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>
+            <visible>[!Window.IsVisible(DialogVideoInfo.xml) + !Window.IsVisible(DialogMusicInfo.xml) + !Window.IsVisible(DialogAddonInfo.xml) + !Window.IsVisible(DialogPVRInfo.xml)] | Window.IsVisible(script-script.extendedinfo-VideoList.xml)</visible>
+            <visible>!$EXP[Expression_ShowWeatherWidget] + !$EXP[Expression_ShowSystemInfoWidget]</visible>
+            <include condition="!Window.IsVisible(script-script.extendedinfo-VideoList.xml)">Bottombar_BusySpinner</include>
+        </control>
+    </include>
+
+    <include name="Bottombar_Views">
+        <control type="group">
+            
+<!-- 			<onleft>300</onleft>
+			<onup>300</onup> -->
+            <include condition="Window.IsVisible(Home) + !Window.IsVisible(script-script.extendedinfo-VideoList.xml)">View_Home_Widget</include>
+            <include condition="Window.IsVisible(script-script.extendedinfo-VideoList.xml)">View_ExtendedInfo</include>
+            <include condition="Window.IsVisible(EventLog.xml)">View_EventLog</include>
+            <include condition="Window.IsVisible(1101)">View_Hub_1101</include>
+            <include condition="Window.IsVisible(1102)">View_Hub_1102</include>
+            <include condition="Window.IsVisible(1103)">View_Hub_1103</include>
+            <include condition="Window.IsVisible(1104)">View_Hub_1104</include>
+            <include condition="Window.IsVisible(1105)">View_Hub_1105</include>
+            <include condition="Window.IsVisible(1106)">View_Hub_1106</include>
+            <include condition="Window.IsVisible(1107)">View_Hub_1107</include>
+            <include condition="Window.IsVisible(1108)">View_Hub_1108</include>
+            <include condition="Window.IsVisible(1109)">View_Hub_1109</include>
+            <include condition="Window.IsVisible(1111)">View_AddonsPage</include>
+            <include condition="[Window.IsVisible(MyPVRChannels.xml) | Window.IsVisible(MyPVRTimers.xml) | Window.IsVisible(MyPVRRecordings.xml) | Window.IsVisible(MyPVRSearch.xml)]">View_PVR</include>
+            <include condition="!Window.IsVisible(Home) + !Window.IsVisible(script-script.extendedinfo-VideoList.xml) + !Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) + !Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) + !Window.IsVisible(EventLog.xml) + !Window.IsVisible(MyPVRChannels.xml) + !Window.IsVisible(MyPVRTimers.xml) + !Window.IsVisible(MyPVRRecordings.xml) + !Window.IsVisible(MyPVRSearch.xml) + !Window.IsVisible(1101) + !Window.IsVisible(1102) + !Window.IsVisible(1103) + !Window.IsVisible(1104) + !Window.IsVisible(1105) + !Window.IsVisible(1106) + !Window.IsVisible(1107) + !Window.IsVisible(1108) + !Window.IsVisible(1109) + !Window.IsVisible(1111)">View_Library</include>
+            <include condition="!Window.IsVisible(Home) + !Window.IsVisible(script-script.extendedinfo-VideoList.xml) + !Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) + !Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) + !Window.IsVisible(EventLog.xml) + !Window.IsVisible(MyPVRChannels.xml) + !Window.IsVisible(MyPVRTimers.xml) + !Window.IsVisible(MyPVRRecordings.xml) + !Window.IsVisible(MyPVRSearch.xml) + !Window.IsVisible(1101) + !Window.IsVisible(1102) + !Window.IsVisible(1103) + !Window.IsVisible(1104) + !Window.IsVisible(1105) + !Window.IsVisible(1106) + !Window.IsVisible(1107) + !Window.IsVisible(1108) + !Window.IsVisible(1109) + !Window.IsVisible(1111)">View_Landscapes</include>
+
+			</control>
+    </include>
+	
+    <include name="Bottombar_Infobar_widget">
+        <control type="group">
+            <bottom>-800</bottom>
+            <left>-300</left>
+			
+            
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>				
+            <height>1020</height>
+             <include>Bottombar_Infobar_Texture_widget</include>           
+
+        </control>
+    </include>
+
+
+    <include name="Bottombar_Infobar">
+        <control type="group">
+			
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+			<visible>Control.IsVisible(560)</visible>
+			<control type="image">
+            <bottom>0</bottom>
+            <top>-50</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			
+
+			</control>	
+		</control>
+
+
+	
+
+        <control type="group">
+			
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+			<visible>!Control.IsVisible(501)</visible>
+			<visible>Control.IsVisible(55) | Control.IsVisible(56) | Control.IsVisible(59) | Control.IsVisible(57)  | Control.IsVisible(58)</visible>
+            <bottom>-340</bottom>
+            <left>0</left>
+            <right>0</right>
+            		
+            <height>1020</height>
+			<control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+            <bottom>0</bottom>
+            <top>-800</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+			</control>
+		
+        <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+			<visible>Control.IsVisible(57)  | Control.IsVisible(58)</visible>
+
+            <bottom>0</bottom>
+            <top>275</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control>		
+		
+        <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+			<visible>Control.IsVisible(56) | Control.IsVisible(55)</visible>
+
+            <bottom>0</bottom>
+            <top>-500</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control>	
+		
+                <control type="label">
+					<top>-1750</top>
+					<left>450</left>
+                    <width>1000</width>
+					<align>center</align>
+                    <scroll>true</scroll>
+                    <font>font_infobar_mainlabel</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>$INFO[ListItem.Label]</label>
+                    <aligny>center</aligny>
+					
+                </control>	
+				
+                <control type="textbox">
+					<top>480</top>
+					<left>140</left>
+					<height>90</height>
+                    <width>1650</width>
+					<align>left</align>
+					<textcolor>panel_fg_70</textcolor>
+                    <label>$VAR[Label_Plot]</label>
+                    <font>font_plotbox</font>
+                    <visible>Control.IsVisible(57)  | Control.IsVisible(58)</visible>
+                   	<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+					<autoscroll delay="10000" time="4000" repeat="5000">Control.IsVisible(57)  | Control.IsVisible(58)</autoscroll>
+                </control>	
+
+                <control type="group">
+					<include>Animation_Bottombar_Infobar_Plot2</include>
+					<right>110</right>
+					<top>-390</top>
+					<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+                    <visible>!Control.IsVisible(56)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>	
+                <control type="group">
+					<include>Animation_Bottombar_Infobar_Plot2</include>
+					<right>50</right>
+					<top>-390</top>
+					<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+                    <visible>Control.IsVisible(56)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>	
+<!--                 <control type="group">
+					<include>Animation_Bottombar_Infobar_Plot2</include>
+					<right>50</right>
+					<top>-390</top>
+					<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+                 
+                     <include>Object_StarRating</include> 
+                </control>		 -->			
+				  
+			
+
+        </control>
+	
+
+        <control type="group">
+			<visible>!Control.IsVisible(501)</visible>
+			<visible>!Control.IsVisible(560)</visible>
+						
+			<visible>!Control.IsVisible(58) + !Control.IsVisible(57) + !Control.IsVisible(52) + !Control.IsVisible(53) + !Container.Content(episodes) +!Control.IsVisible(55) +!Control.IsVisible(56) +!Control.IsVisible(59)</visible>
+            <bottom>-340</bottom>
+            <left>0</left>
+            <right>0</right>
+            		
+            <height>1020</height>
+            <include>Bottombar_Infobar_Texture</include>
+           
+            <control type="group">
+                <height>100</height>
+                <top>-20</top>
+				<right>20</right>
+                <include>Animation_Bottombar_Text</include>
+                <control type="group">
+					<include>Animation_Bottombar_Infobar_Plot2</include>
+					<top>-370</top>
+					<visible>!Control.IsVisible(52) + !Control.IsVisible(53) + !Control.IsVisible(51)</visible>
+					
+                    <visible>!Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>
+				
+<!--                 <control type="group">
+					<include>Animation_Bottombar_Infobar_Plot2</include>
+					<top>-350</top>
+					<visible>!Control.IsVisible(52) + !Control.IsVisible(53) + !Control.IsVisible(51)</visible>
+					<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>	
+                    <visible>!Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+=	
+                    <include content="Object_Flags" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="monochrome" />
+                    </include>
+                    <include content="Object_Flags" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="monochrome" />
+                    </include>
+                </control> -->
+                <control type="group">
+					<top>-370</top>
+					<visible>!Control.IsVisible(52) + !Control.IsVisible(53)+ !Control.IsVisible(51)</visible>
+					
+                    <visible>Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>
+<!--                 <control type="group">
+					<include>Animation_Bottombar_Infobar_Plot2</include>
+					<top>-350</top>
+					<visible>!Control.IsVisible(52) + !Control.IsVisible(53) + !Control.IsVisible(51)</visible>
+					<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>	
+                    <visible>Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+=	
+                    <include content="Object_Flags" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Flags" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control> -->
+				
+                <control type="group">
+					<top>-520</top>
+					<visible>!Control.IsVisible(52) + !Control.IsVisible(53)+ !Control.IsVisible(51)</visible>
+					<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>	
+                    <visible> Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+
+                </control>
+
+
+
+				</control>
+            <control type="group">
+                <include>Animation_Bottombar_Text</include>
+                <include condition="!Window.IsVisible(MyPVRGuide.xml) + !Window.IsVisible(Home)">Bottombar_StandardInfo</include>
+                <include condition="Window.IsVisible(Home)">Bottombar_HomeInfo</include>
+                <include condition="Window.IsVisible(MyPVRGuide.xml)">Bottombar_PVRGuideInfo</include>
+            </control>
+        </control>
+
+        <control type="group">
+			<visible>!Control.IsVisible(501)</visible>
+			<visible>Control.IsVisible(52) | Control.IsVisible(53) | Control.IsVisible(50)</visible>
+            <bottom>-500</bottom>
+            <left>0</left>
+            <right>0</right>
+            		
+            <height>1020</height>
+			
+
+			
+            <include>Bottombar_Infobar_Texture</include>
+				
+            <control type="group">
+                <height>100</height>
+                <top>-20</top>
+				<right>20</right>
+                <include>Animation_Bottombar_Text</include>
+				
+                <control type="group">
+					<include>Animation_Bottombar_Infobar_Plot2</include>
+					<top>-370</top>
+					<visible>!Control.IsVisible(500) + !Control.IsVisible(52) + !Control.IsVisible(53)</visible>
+					
+                    <visible>!Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>
+				
+                <control type="group">
+					<top>-370</top>
+					<visible>!Control.IsVisible(500) + !Control.IsVisible(52) + !Control.IsVisible(53)</visible>
+					
+                    <visible>Skin.HasSetting(UseColorFlags) + !Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>
+
+				
+                <control type="group">
+					<top>-520</top>
+					<visible>!Control.IsVisible(500) + !Control.IsVisible(52) + !Control.IsVisible(53)</visible>
+					<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>	
+                    <visible> Container.content(episodes)</visible>
+                    <include content="Object_Ratings" condition="Window.IsVisible(Home)">
+                        <param name="container" value="Container(301)." />
+                        <param name="directory" value="color" />
+                    </include>
+                    <include content="Object_Ratings" condition="!Window.IsVisible(Home)">
+                        <param name="container" value="" />
+                        <param name="directory" value="color" />
+                    </include>
+                </control>
+
+				
+
+				</control>
+            <control type="group">
+                <include>Animation_Bottombar_Text</include>
+                <include condition="!Window.IsVisible(MyPVRGuide.xml) + !Window.IsVisible(Home)">Bottombar_StandardInfo</include>
+                <include condition="Window.IsVisible(Home)">Bottombar_HomeInfo</include>
+                <include condition="Window.IsVisible(MyPVRGuide.xml)">Bottombar_PVRGuideInfo</include>
+            </control>
+		</control>
+
+
+
+	
+        <control type="group">
+			 <visible>!Control.IsVisible(501)</visible>
+			<visible>Control.IsVisible(500)</visible>
+            <bottom>-520</bottom>
+            <left>-750</left>
+            <height>1020</height>
+            <include>Bottombar_Infobar_Texture</include>
+        </control>
+
+		</include>
+
+    <!-- ============== -->
+    <!-- Plain Info Bar -->
+    <!-- ============== -->
+    <include name="Bottombar_Plain">
+        <control type="group">
+            <include>Bottombar_Infobar</include>
+            <control type="group">
+                <bottom>0</bottom>
+                <left>0</left>
+                <right>0</right>
+                <height>420</height>
+             </control>
+        </control>
+    </include>
+
+    <!-- ================== -->
+    <!-- Info Panel Content -->
+    <!-- ================== -->
+    <include name="Bottombar_PVRGuideInfo">
+        <control type="group">
+            <left>30</left>
+            <right>30</right>
+            <height>100</height>
+            <top>0</top>
+            <control type="grouplist">
+                <orientation>horizontal</orientation>
+                <itemgap>20</itemgap>
+                <top>0</top>
+                <bottom>33%</bottom>
+                <usecontrolcoords>true</usecontrolcoords>
+                <control type="label">
+                    <width>auto</width>
+                    <scroll>true</scroll>
+                    <font>font_infobar_mainlabel</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>$INFO[ListItem.Title]</label>
+                    <aligny>center</aligny>
+                </control>
+                <control type="label">
+                    <top>7</top>
+                    <width>auto</width>
+                    <font>font_infobar_sublabel</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>[COLOR=panel_fg_70]$INFO[ListItem.ChannelNumber,,. ]$INFO[ListItem.ChannelName,,  •  ][/COLOR]$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,  [COLOR=panel_fg_70]•[/COLOR]  ][COLOR=$VAR[ColorHighlight]]$INFO[ListItem.Genre][/COLOR]</label>
+                    <aligny>center</aligny>
+                    <visible>Player.HasVideo + Skin.HasSetting(global.showvideo)</visible>
+                </control>
+            </control>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>[COLOR=panel_fg_70]$INFO[ListItem.ChannelNumber,,. ]$INFO[ListItem.ChannelName,,  •  ][/COLOR]$INFO[ListItem.StartTime]$INFO[ListItem.EndTime, - ,  [COLOR=panel_fg_70]•[/COLOR]  ][COLOR=$VAR[ColorHighlight]]$INFO[ListItem.Genre][/COLOR]</label>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+                <top>33%</top>
+                <visible>!Player.HasVideo | !Skin.HasSetting(global.showvideo)</visible>
+            </control>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$INFO[ListItem.Plot]</label>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+                <top>33%</top>
+                <visible>Player.HasVideo + Skin.HasSetting(global.showvideo)</visible>
+				<autoscroll delay="10000" time="4000" repeat="5000">Player.HasVideo + Skin.HasSetting(global.showvideo)</autoscroll>
+            </control>
+        </control>
+        <control type="group">
+            <control type="group">
+                <top>108</top>
+                <height>130</height>
+                <left>30</left>
+                <right>30</right>
+                <control type="textbox" id="9399">
+                    <label>$VAR[Label_Plot]</label>
+                    <include condition="Skin.HasSetting(EnableTransparency)">Animation_Bottombar_Infobar_Plot</include>
+                    <font>font_plotbox</font>
+                    <textcolor>panel_fg_100</textcolor>
+					<autoscroll delay="10000" time="4000" repeat="5000">true</autoscroll>
+                </control>
+            </control>
+        </control>
+    </include>
+
+    <include name="Bottombar_StandardInfo_Title">
+	
+        <control type="group">
+            <left>740</left>
+            <right>514</right>
+            <height>100</height>
+			<width>800</width>
+            <top>-400</top>
+			<visible>!Control.IsVisible(500)</visible>
+			<visible>!Container.content(episodes)</visible>
+			<visible>!Control.IsVisible(52) + !Control.IsVisible(53) + !Control.IsVisible(50) + !Control.IsVisible(51)</visible>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>	
+            <visible>Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | !Window.IsVisible(DialogVideoInfo.xml) | String.IsEmpty(Window(Home).Property(FocusedList))</visible>
+            <include>Animation_FadeOut</include>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <scroll>true</scroll>
+                <scrollsuffix>. </scrollsuffix>
+                <font>font_infobar_mainlabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_Title]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <top>0</top>
+                <bottom>33%</bottom>
+				
+            </control>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_InfoLine]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+                <top>33%</top>
+				
+            </control>
+        </control>
+
+        <control type="group">
+            <left>750</left>
+            <right>514</right>
+            <height>100</height>
+			<width>800</width>
+            <top>-410</top>
+			<visible>!Control.IsVisible(500)</visible>
+			<visible>Container.content(episodes)</visible>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>	
+            <visible>Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | !Window.IsVisible(DialogVideoInfo.xml) | String.IsEmpty(Window(Home).Property(FocusedList))</visible>
+            <include>Animation_FadeOut</include>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <scroll>true</scroll>
+                <scrollsuffix>. </scrollsuffix>
+                <font>font_infobar_mainlabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_Title]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <top>0</top>
+                <bottom>33%</bottom>
+				<visible>!container.content(episodes)</visible>
+            </control>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_InfoLine]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+                <top>33%</top>
+				<visible>!container.content(episodes)</visible>
+            </control>
+			
+            <control type="label">
+                <left>80</left>
+                <right>0</right>
+                <scroll>true</scroll>
+				<top>-260</top>
+                <scrollsuffix>. </scrollsuffix>
+                <font>font_infobar_mainlabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_Title]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <top>0</top>
+                <bottom>33%</bottom>
+				<visible>!Control.IsVisible(50)</visible>
+				<visible>container.content(episodes)</visible>
+            </control>
+            <control type="label">
+                <left>80</left>
+				<top>-230</top>
+                <right>0</right>
+				<width>800</width>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_InfoLine]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+ 				<visible>!Control.IsVisible(50)</visible>               
+				<visible>container.content(episodes)</visible>
+            </control>
+            <control type="label">
+                <left>80</left>
+				<top>650</top>
+                <right>0</right>
+				<width>1000</width>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_InfoLine]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+ 				<visible>Control.IsVisible(50)</visible>               
+				<visible>container.content(episodes)</visible>
+            </control>
+        </control>
+
+		</include>
+
+    <include name="Bottombar_StandardInfo">
+        <include>Bottombar_StandardInfo_Title</include>
+		
+        <control type="group">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+			<visible>!Control.IsVisible(52) + !Control.IsVisible(53) + !Control.IsVisible(50)</visible>
+				
+			<visible>!container.content(episodes)</visible>
+            <top>-300</top>
+            <height>130</height>
+            <left>740</left>
+            <right>30</right>
+            <control type="textbox" id="9399">
+                <label>$VAR[Label_Plot]</label>
+               <include>Animation_Bottombar_Infobar_Plot2</include>
+                <font>font_plotbox</font>
+                <textcolor>panel_fg_100</textcolor>
+				<autoscroll delay="10000" time="4000" repeat="5000">true</autoscroll>
+            </control>
+        </control>
+        <control type="group">
+<!-- 			<visible>!Control.IsVisible(52) + !Control.IsVisible(53) + !Control.IsVisible(50)</visible>
+			
+ -->
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+			<visible>container.content(episodes)</visible>
+			<visible>!Control.IsVisible(500)</visible>
+            <top>300</top>
+            <height>130</height>
+            <left>830</left>
+            <right>30</right>
+            <control type="textbox" id="9399">
+                <label>$VAR[Label_Plot]</label>
+                <include>Animation_Bottombar_Infobar_Plot2</include>
+                <font>font_plotbox</font>
+                <textcolor>white</textcolor>
+				<autoscroll delay="10000" time="4000" repeat="5000">true</autoscroll>
+            </control>
+        </control>
+
+
+
+		<control type="group">
+            <left>614</left>
+            <right>514</right>
+            <height>100</height>
+            <top>0</top>
+			<visible>!Control.IsVisible(500)</visible>
+			<visible>!Container.Content(episodes)</visible>
+			<visible>Control.IsVisible(52) | Control.IsVisible(50)</visible>
+            <visible>!String.IsEmpty(ListItem.VideoCodec) | !String.IsEmpty(ListItem.VideoAspect) | !String.IsEmpty(ListItem.AudioCodec) | !String.IsEmpty(ListItem.AudioChannels) | !String.IsEmpty(Container(301).ListItem.VideoCodec) | !String.IsEmpty(Container(301).ListItem.VideoAspect) | !String.IsEmpty(Container(301).ListItem.AudioCodec) | !String.IsEmpty(Container(301).ListItem.AudioChannels)</visible>
+            <visible>Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | !Window.IsVisible(DialogVideoInfo.xml) | String.IsEmpty(Window(Home).Property(FocusedList))</visible>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml)  + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <scroll>true</scroll>
+                <scrollsuffix>. </scrollsuffix>
+                <font>font_infobar_mainlabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_Title]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <top>0</top>
+                <bottom>33%</bottom>
+            </control>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_InfoLine]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+                <top>33%</top>
+            </control>
+        </control>
+        <control type="group">
+            <left>614</left>
+            <right>30</right>
+            <height>100</height>
+            <top>0</top>
+			<visible>!Control.IsVisible(500)</visible>
+			<visible>!Container.Content(episodes)</visible>
+			<visible>Control.IsVisible(52) | Control.IsVisible(50)</visible>
+            <visible>String.IsEmpty(ListItem.VideoCodec) + String.IsEmpty(ListItem.VideoAspect) + String.IsEmpty(ListItem.AudioCodec) + String.IsEmpty(ListItem.AudioChannels) + String.IsEmpty(Container(301).ListItem.VideoCodec) + String.IsEmpty(Container(301).ListItem.VideoAspect) + String.IsEmpty(Container(301).ListItem.AudioCodec) + String.IsEmpty(Container(301).ListItem.AudioChannels)</visible>
+            <visible>Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | !Window.IsVisible(DialogVideoInfo.xml) | String.IsEmpty(Window(Home).Property(FocusedList))</visible>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <scroll>true</scroll>
+                <scrollsuffix>. </scrollsuffix>
+                <font>font_infobar_mainlabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <scroll>true</scroll>
+                <label>$VAR[Label_Title]</label>
+                <aligny>center</aligny>
+                <top>0</top>
+                <bottom>33%</bottom>
+            </control>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_InfoLine]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+                <top>33%</top>
+            </control>
+        </control>
+
+        <control type="group">
+            <left>80</left>
+            <right>30</right>
+            <height>100</height>
+            <top>-300</top>
+			<width>500</width>
+			<visible>!Control.IsVisible(500)</visible>
+			<visible>!Container.Content(episodes)</visible>
+			<visible>Control.IsVisible(53)</visible>
+            <visible>String.IsEmpty(ListItem.VideoCodec) + String.IsEmpty(ListItem.VideoAspect) + String.IsEmpty(ListItem.AudioCodec) + String.IsEmpty(ListItem.AudioChannels) + String.IsEmpty(Container(301).ListItem.VideoCodec) + String.IsEmpty(Container(301).ListItem.VideoAspect) + String.IsEmpty(Container(301).ListItem.AudioCodec) + String.IsEmpty(Container(301).ListItem.AudioChannels)</visible>
+            <visible>Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | !Window.IsVisible(DialogVideoInfo.xml) | String.IsEmpty(Window(Home).Property(FocusedList))</visible>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <scroll>true</scroll>
+                <scrollsuffix>. </scrollsuffix>
+                <font>font_infobar_mainlabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <scroll>true</scroll>
+                <label>$VAR[Label_Title]</label>
+                <aligny>center</aligny>
+                <top>0</top>
+                <bottom>33%</bottom>
+            </control>
+            <control type="label">
+                <left>0</left>
+                <right>0</right>
+                <font>font_infobar_sublabel</font>
+                <textcolor>panel_fg_100</textcolor>
+                <label>$VAR[Label_InfoLine]</label>
+                <scroll>true</scroll>
+                <aligny>center</aligny>
+                <bottom>0</bottom>
+                <top>33%</top>
+            </control>
+        </control>
+
+
+
+
+
+		</include>
+
+	
+    <include name="Bottombar_HomeInfo_widget">
+
+    </include>
+	
+	
+	
+    <include name="Bottombar_HomeInfo">
+        <control type="group">
+            <visible>[Control.IsVisible(301) + !Container(301).IsUpdating + !Integer.IsEqual(Container(301).NumItems,0)] | Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsVisible(script-script.extendedinfo-VideoList.xml)</visible>
+            <visible>!$EXP[Expression_ShowWeatherWidget] + !$EXP[Expression_ShowSystemInfoWidget]</visible>
+            <control type="group">
+                <left>614</left>
+                <right>514</right>
+                <height>100</height>
+                <top>0</top>
+                <visible>!String.IsEmpty(ListItem.VideoCodec) | !String.IsEmpty(ListItem.VideoAspect) | !String.IsEmpty(ListItem.AudioCodec) | !String.IsEmpty(ListItem.AudioChannels) | !String.IsEmpty(Container(301).ListItem.VideoCodec) | !String.IsEmpty(Container(301).ListItem.VideoAspect) | !String.IsEmpty(Container(301).ListItem.AudioCodec) | !String.IsEmpty(Container(301).ListItem.AudioChannels)</visible>
+                <visible>Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | !Window.IsVisible(DialogVideoInfo.xml) | String.IsEmpty(Window(Home).Property(FocusedList)) | Window.IsVisible(script-script.extendedinfo-VideoList.xml)</visible>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_mainlabel</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>$VAR[Label_Widget_Title]</label>
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>0</top>
+                    <bottom>33%</bottom>
+                </control>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_sublabel</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>$VAR[Label_Widget_InfoLine]</label>
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>33%</top>
+                    <bottom>0</bottom>
+                </control>
+            </control>
+            <control type="group">
+                <left>614</left>
+                <right>30</right>
+                <height>100</height>
+                <top>0</top>
+                <visible>String.IsEmpty(ListItem.VideoCodec) + String.IsEmpty(ListItem.VideoAspect) + String.IsEmpty(ListItem.AudioCodec) + String.IsEmpty(ListItem.AudioChannels) + String.IsEmpty(Container(301).ListItem.VideoCodec) + String.IsEmpty(Container(301).ListItem.VideoAspect) + String.IsEmpty(Container(301).ListItem.AudioCodec) + String.IsEmpty(Container(301).ListItem.AudioChannels)</visible>
+                <visible>Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | !Window.IsVisible(DialogVideoInfo.xml) | String.IsEmpty(Window(Home).Property(FocusedList)) | Window.IsVisible(script-script.extendedinfo-VideoList.xml)</visible>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_mainlabel</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>$VAR[Label_Widget_Title]</label>
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>0</top>
+                    <bottom>33%</bottom>
+                </control>
+                <control type="label">
+                    <left>0</left>
+                    <right>0</right>
+                    <font>font_infobar_sublabel</font>
+                    <textcolor>panel_fg_100</textcolor>
+                    <label>$VAR[Label_Widget_InfoLine]</label>
+                    <scroll>true</scroll>
+                    <aligny>center</aligny>
+                    <top>33%</top>
+                    <bottom>0</bottom>
+                </control>
+            </control>
+            <control type="group">
+                <top>108</top>
+                <height>130</height>
+                <left>614</left>
+                <right>30</right>
+                <control type="textbox" id="9399">
+                    <label>$VAR[Label_Widget_Plot]</label>
+                    <include condition="Skin.HasSetting(EnableTransparency)">Animation_Bottombar_Infobar_Plot</include>
+                    <font>font_plotbox</font>
+                    <textcolor>panel_fg_100</textcolor>
+					<autoscroll delay="10000" time="4000" repeat="5000">true</autoscroll>
+                </control>
+            </control>
+        </control>
+    </include>
+
+    <!-- ======== -->
+    <!-- Textures -->
+    <include name="Bottombar_Infobar_Texture_widget">
+        <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>
+			<visible>Window.IsVisible(DialogAddonInfo.xml)</visible>
+            <top>400</top>
+            <height>1</height>
+            <width>100%</width>
+            <texture flipy="true"colordiffuse="highlight_bottombar">common/white.png</texture>
+        </control>
+ 
+		<control type="image">
+			<visible>Window.IsVisible(DialogAddonInfo.xml)</visible>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>
+			<visible>!String.IsEqual(Container(301).ListItem.Title,Container(301).ListItem.TvShowTitle)</visible>
+            <bottom>0</bottom>
+            <top>10</top>
+			<left>-300</left>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+        </control>
+		
+		<control type="image">
+			<visible>Window.IsVisible(DialogAddonInfo.xml)</visible>
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>
+			<visible>String.IsEqual(Container(301).ListItem.Title,Container(301).ListItem.TvShowTitle)</visible>
+            <bottom>0</bottom>
+            <top>-380</top>
+			<left>-300</left>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+        </control>
+    </include>
+	
+
+    <include name="Bottombar_Infobar_Texture">
+	
+        <control type="image">
+			<visible>!Container.Content(episodes)</visible>
+			<visible>Control.IsVisible(50) + !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+            <bottom>0</bottom>
+            <top>0</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+        </control>
+		
+        <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+			<visible>Control.IsVisible(52)</visible>
+            <top>-12</top>
+            <height>12</height>
+            <width>100%</width>
+            <texture flipy="true">common/shadow-line-24px.png</texture>
+        </control>
+	
+        <control type="image">
+			
+			<visible>Control.IsVisible(51) + !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+            <bottom>0</bottom>
+            <top>-275</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+        </control>	
+
+        <control type="image">
+			<visible>!Container.Content(episodes)</visible>
+			<visible>Control.IsVisible(53) + !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+            <bottom>0</bottom>
+            <top>-350</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+        </control>		
+       <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+			<visible>!Control.IsVisible(52) + !Control.IsVisible(53)</visible>
+			<visible>Control.IsVisible(50) | Control.IsVisible(54) | Control.IsVisible(51)</visible>
+			<visible>Container.content(episodes)</visible>
+            <bottom>0</bottom>
+			<left>810</left>
+            <top>-700</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control> 
+		
+        <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+
+			<visible>!Control.IsVisible(52) + !Control.IsVisible(53)</visible>
+			<visible>Control.IsVisible(500) | Control.IsVisible(50) | Control.IsVisible(54) | Control.IsVisible(51)</visible>
+			<visible>Container.content(episodes)</visible>
+            <bottom>0</bottom>
+            <top>-800</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control>
+
+
+        <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)</visible>
+			<visible>!Control.IsVisible(52) + !Control.IsVisible(53)</visible>
+			<visible>!Container.content(episodes)</visible>
+			<visible>Control.IsVisible(50) | Control.IsVisible(54) | Control.IsVisible(51)</visible>
+            <bottom>0</bottom>
+            <top>-400</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control>
+       <control type="image">
+			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
+			<visible>Control.IsVisible(500)</visible>
+			<visible>Container.content(episodes)</visible>
+            <bottom>0</bottom>
+			<left>1530</left>
+            <top>-700</top>
+            <texture colordiffuse="panel_bg">common/white.png</texture>
+			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
+
+        </control> 
+    </include>
+</includes>

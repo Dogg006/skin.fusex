@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foundation -->
+<window>
+   
+    <onload>SetProperty(SkinInitStarted,1,home)</onload>
+	<onload>ReplaceWindow($INFO[System.StartupWindow])</onload>
+</window>
