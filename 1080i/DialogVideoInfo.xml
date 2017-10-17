@@ -184,7 +184,7 @@
                         </control>
                         <control type="textbox">
                             <top>32</top>
-                            <textcolor>main_fg_70</textcolor>
+                            <textcolor>main_fg_100</textcolor>
                             <font>font_systeminfo_skinversion</font>
                             <aligny>top</aligny>
 												<height>600</height>

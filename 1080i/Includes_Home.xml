@@ -81,15 +81,20 @@
 		Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) 
 		| Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) 
 		| Window.IsVisible(DialogVideoInfo.xml)
+		| Window.IsVisible(script-NextAired-TVGuide.xml) 
+		| Window.IsVisible(script-NextAired-TVGuide2.xml)
+	
 		">Conditional</animation>
 
     </include>
 
     <include name="Topbar_MainMenu_Lines">
+		
         <control type="image">
             <top>0</top>
             <height>1</height>
             <texture colordiffuse="highlight_bottombar">common/white.png</texture>
+			
         </control>
         <control type="image">
             <bottom>0</bottom>
@@ -107,8 +112,8 @@
 			<onright>301</onright>
             <include>Topbar_OnClick</include>
             <include>Topbar_OnFocus</include>
-<!--             <include>Topbar_MainMenu_Movement</include> -->
             <include>Topbar_MainMenu_Layout</include>
+
             <include condition="![Window.IsVisible(settings) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)]">Topbar_MainMenu_HomeItems</include>
             <include condition="[Window.IsVisible(settings) | Window.IsVisible(SettingsCategory.xml) | Window.IsVisible(FileManager.xml) | Window.IsVisible(AddonBrowser.xml) | Window.IsVisible(SkinSettings.xml) | Window.IsVisible(SettingsSystemInfo.xml) | Window.IsVisible(SettingsProfile.xml) | Window.IsVisible(EventLog.xml)]">Topbar_MainMenu_SettingsItems</include>
         </control>
@@ -121,7 +126,7 @@
         <right>0</right>
 		<width>150</width>
         <orientation>vertical</orientation>
-		
+
 		<onleft>302</onleft>
         <itemlayout height="70" width="100">
                 <control type="image">
@@ -132,7 +137,7 @@
  					<top>5</top>                                     
                     <aligny>center</aligny>
                     <align>center</align>
-
+					
                     <texture colordiffuse="main_fg_70">$INFO[ListItem.Icon]</texture>
 
                 </control>
@@ -247,6 +252,7 @@
     <!-- ======= -->
     <include name="Topbar_SubMenu">
         <control type="group">
+			
 			<left>-290</left>
             <include>Topbar_SubMenu_Group</include>
             <include>Topbar_SubMenu_Home</include>

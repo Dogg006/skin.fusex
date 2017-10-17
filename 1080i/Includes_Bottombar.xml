@@ -1008,7 +1008,13 @@
             <top>-350</top>
             <texture colordiffuse="panel_bg">common/white.png</texture>
 			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
-        </control>		
+        </control>	
+
+		
+
+		
+		
+		############ LISTVIEW #################
        <control type="image">
 			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
 
@@ -1019,7 +1025,6 @@
 			<left>810</left>
             <top>-700</top>
             <texture colordiffuse="panel_bg">common/white.png</texture>
-			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
 
         </control> 
 		
@@ -1032,7 +1037,6 @@
             <bottom>0</bottom>
             <top>-800</top>
             <texture colordiffuse="panel_bg">common/white.png</texture>
-			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
 
         </control>
 
@@ -1045,9 +1049,9 @@
             <bottom>0</bottom>
             <top>-400</top>
             <texture colordiffuse="panel_bg">common/white.png</texture>
-			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
-
         </control>
+		
+
        <control type="image">
 			<visible>!Window.IsVisible(DialogVideoInfo.xml)+ !Window.IsVisible(home) + !Window.IsVisible(SettingsCategory.xml) + !Window.IsVisible(FileManager.xml) + !Window.IsVisible(AddonBrowser.xml) + !Window.IsVisible(SkinSettings.xml) + !Window.IsVisible(SettingsProfile.xml) + !Window.IsVisible(SettingsSystemInfo.xml)</visible>
 			<visible>Control.IsVisible(500)</visible>
@@ -1056,7 +1060,6 @@
 			<left>1530</left>
             <top>-700</top>
             <texture colordiffuse="panel_bg">common/white.png</texture>
-			<animation effect="fade" start="100" end="75" condition="true">Conditional</animation>
 
         </control> 
     </include>
