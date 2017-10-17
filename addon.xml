@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<addon id="skin.fusex" version="0.4" name="FuseX" provider-name="jurialmunkey, aenemapy">
+<addon id="skin.fusex" version="0.4.2" name="FuseX" provider-name="jurialmunkey, aenemapy">
     <requires>
         <import addon="xbmc.gui" version="5.13.0"/>
         <import addon="script.skinshortcuts" version="0.4.0"/>

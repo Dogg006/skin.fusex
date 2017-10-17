@@ -79,7 +79,7 @@
                 <visible>Window.IsVisible(Home)</visible>
                 <aspectratio>scale</aspectratio>
 				
-                <texture background="true">special://skin/extras/backgrounds/default.jpg</texture>
+                <texture background="true">$VAR[Global_Background_Image_NoFanart]</texture>
                 <animation effect="zoom" start="110" end="130" center="auto" time="10000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(AnimatedFanart)">Conditional</animation>
                 <animation effect="slide" start="-30,-30" end="30,30" time="6000" tween="sine" easing="inout" pulse="true" condition="Skin.HasSetting(AnimatedFanart)">Conditional</animation>
             </control>
@@ -403,14 +403,13 @@
   </variable>	
 	
     <variable name="Global_Background_Image_NoFanart">
-        <value condition="Window.IsVisible(home) + !String.IsEmpty(Container(300).ListItem.Property(Background))">$INFO[Container(300).ListItem.Property(Background)]</value>
-        <value condition="Window.IsVisible(home) + !String.IsEmpty(Skin.String(home.slideshowpath)) + !String.IsEqual(Skin.String(home.slideshowpath),$LOCALIZE[8]) + [String.IsEmpty(Container(300).ListItem.Property(widget)) | Container(301).IsUpdating |  Skin.HasSetting(home.dontshowfanart)]">$INFO[Skin.String(home.slideshowpath)]</value>
-        <value condition="!String.IsEmpty(Skin.String(fanart.fallback))">$INFO[Skin.String(fanart.fallback)]</value>
+		<value condition="Skin.HasSetting(NoFanart)">-</value>
+        <value condition="!String.IsEmpty(Skin.String(fanart.fallback)) + !Skin.HasSetting(NoFanart)">$INFO[Skin.String(fanart.fallback)]</value>
         <value>special://skin/extras/backgrounds/default.jpg</value>
     </variable>
 
     <variable name="Global_Background_Image">
-        <value condition="Skin.HasSetting(NoFanart)">$VAR[Global_Background_Image_NoFanart]</value>
+        <value condition="Skin.HasSetting(NoFanart)">-</value>
         <!-- Extended Info -->
         <value condition="Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) + [String.IsEqual(Window(Home).Property(FocusedList),150) | Control.HasFocus(150)] + !String.IsEmpty(Container(150).ListItem.Art(fanart))">$INFO[Container(150).ListItem.Art(fanart)]</value>
         <value condition="Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) + [String.IsEqual(Window(Home).Property(FocusedList),150) | Control.HasFocus(150)] + !String.IsEmpty(Container(150).ListItem.Art(fanart))">$INFO[Container(150).ListItem.Art(fanart)]</value>
